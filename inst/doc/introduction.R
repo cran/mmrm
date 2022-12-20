@@ -14,14 +14,23 @@ fit <- mmrm(
 ## ----common-usage-print-------------------------------------------------------
 print(fit)
 
+## ----low-level-control, eval=FALSE--------------------------------------------
+#  mmrm_control(
+#    method = "Kenward-Roger",
+#    optimizer = c("L-BFGS-B", "BFGS"),
+#    n_cores = 2,
+#    start = c(0, 1, 1, 0, 1, 0),
+#    accept_singular = FALSE,
+#    drop_visit_levels = FALSE
+#  )
+
 ## ----common-changes-reml------------------------------------------------------
 fit_ml <- mmrm(
   formula = FEV1 ~ RACE + ARMCD * AVISIT + us(AVISIT | USUBJID),
   data = fev_data,
   reml = FALSE
 )
-
-print(fit_ml)
+fit_ml
 
 ## ----common-changes-optim-----------------------------------------------------
 fit_opt <- mmrm(
@@ -29,8 +38,7 @@ fit_opt <- mmrm(
   data = fev_data,
   optimizer = "BFGS"
 )
-
-print(fit_opt)
+fit_opt
 
 ## ----common-changes-cov-------------------------------------------------------
 fit_cs <- mmrm(
@@ -38,8 +46,7 @@ fit_cs <- mmrm(
   data = fev_data,
   reml = FALSE
 )
-
-print(fit_cs)
+fit_cs
 
 ## ----common-changes-weights---------------------------------------------------
 fit_wt <- mmrm(
@@ -47,8 +54,7 @@ fit_wt <- mmrm(
   data = fev_data,
   weights = fev_data$WEIGHT
 )
-
-print(fit_wt)
+fit_wt
 
 ## ----group-cov----------------------------------------------------------------
 fit_cs <- mmrm(
@@ -56,15 +62,47 @@ fit_cs <- mmrm(
   data = fev_data,
   reml = FALSE
 )
+VarCorr(fit_cs)
 
-print(VarCorr(fit_cs))
+## ----kr-----------------------------------------------------------------------
+fit_kr <- mmrm(
+  formula = FEV1 ~ RACE + ARMCD * AVISIT + us(AVISIT | USUBJID),
+  data = fev_data,
+  method = "Kenward-Roger"
+)
+
+## ----kr_summary---------------------------------------------------------------
+summary(fit_kr)
+
+## ----kr_lin-------------------------------------------------------------------
+fit_kr_lin <- mmrm(
+  formula = FEV1 ~ RACE + ARMCD * AVISIT + us(AVISIT | USUBJID),
+  data = fev_data,
+  method = "Kenward-Roger-Linear"
+)
+
+## ----sparse-------------------------------------------------------------------
+sparse_data <- fev_data[fev_data$AVISIT != "VIS3", ]
+sparse_result <- mmrm(
+  FEV1 ~ RACE + ar1(AVISIT | USUBJID),
+  data = sparse_data,
+  drop_visit_levels = FALSE
+)
+
+dropped_result <- mmrm(
+  FEV1 ~ RACE + ar1(AVISIT | USUBJID),
+  data = sparse_data
+)
+
+## ----sparse_cor---------------------------------------------------------------
+cov2cor(VarCorr(sparse_result))
+cov2cor(VarCorr(dropped_result))
 
 ## ----extraction-summary-fit---------------------------------------------------
 fit <- mmrm(
   formula = FEV1 ~ RACE + ARMCD * AVISIT + us(AVISIT | USUBJID),
   data = fev_data
 )
-
 fit_summary <- summary(fit)
 
 ## ----extraction-summary-fit-coef----------------------------------------------
@@ -91,16 +129,7 @@ fit_mmrm(
   control = mmrm_control()
 )
 
-## ----low-level-control, eval=FALSE--------------------------------------------
-#  mmrm_control(
-#    optimizer = stats::nlminb,
-#    optimizer_args = list(upper = Inf, lower = 0),
-#    optimizer_control = list(),
-#    start = c(0, 1, 1, 0, 1, 0),
-#    accept_singular = FALSE
-#  )
-
-## -----------------------------------------------------------------------------
+## ----1d_satterthwaite---------------------------------------------------------
 fit <- mmrm(
   formula = FEV1 ~ RACE + SEX + ARMCD * AVISIT + us(AVISIT | USUBJID),
   data = fev_data
@@ -111,18 +140,25 @@ contrast[3] <- 1
 
 df_1d(fit, contrast)
 
-## -----------------------------------------------------------------------------
-fit <- mmrm(
+## ----1d_kr--------------------------------------------------------------------
+fit_kr <- mmrm(
   formula = FEV1 ~ RACE + SEX + ARMCD * AVISIT + us(AVISIT | USUBJID),
-  data = fev_data
+  data = fev_data,
+  method = "Kenward-Roger"
 )
 
+df_1d(fit_kr, contrast)
+
+## ----md_satterthwaite---------------------------------------------------------
 contrast <- matrix(data = 0, nrow = 2, ncol = length(component(fit, "beta_est")))
 contrast[1, 2] <- contrast[2, 3] <- 1
 
 df_md(fit, contrast)
 
-## -----------------------------------------------------------------------------
+## ----md_kr--------------------------------------------------------------------
+df_md(fit_kr, contrast)
+
+## ----emmeans------------------------------------------------------------------
 fit <- mmrm(
   formula = FEV1 ~ RACE + ARMCD * AVISIT + us(AVISIT | USUBJID),
   data = fev_data
