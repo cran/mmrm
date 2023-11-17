@@ -23,9 +23,9 @@
 #' - `method`: Adjustment method which was used (for `mmrm` objects),
 #'      otherwise `NULL` (for `mmrm_tmb` objects).
 #' - `beta_vcov`: estimated variance-covariance matrix of coefficients
-#'      (excluding aliased coefficients). For Kenward-Roger
-#'      methods, the adjusted covariance matrix is returned (to still obtain the
-#'      unadjusted covariance matrix use `object$beta_vcov`).
+#'      (excluding aliased coefficients). When Kenward-Roger/Empirical adjusted
+#'      coefficients covariance matrix is used, the adjusted covariance matrix is returned (to still obtain the
+#'      original asymptotic covariance matrix use `object$beta_vcov`).
 #' - `beta_vcov_complete`: estimated variance-covariance matrix including
 #'      aliased coefficients with entries set to `NA`.
 #' - `varcor`: estimated covariance matrix for residuals. If there are multiple
@@ -41,6 +41,7 @@
 #' - `x_matrix`: design matrix used (excluding aliased columns).
 #' - `y_vector`: response vector used.
 #' - `jac_list`: Jacobian, see  [h_jac_list()] for details.
+#' - `full_frame`: `data.frame` with `n` rows containing all variables needed in the model.
 #'
 #' @seealso In the `lme4` package there is a similar function `getME()`.
 #'
@@ -59,13 +60,14 @@
 #' @export
 component <- function(object,
                       name = c(
-                        "cov_type", "n_theta", "n_subjects", "n_timepoints",
+                        "cov_type", "subject_var", "n_theta", "n_subjects", "n_timepoints",
                         "n_obs", "beta_vcov", "beta_vcov_complete",
                         "varcor", "formula", "dataset", "n_groups",
-                        "reml", "convergence", "evaluations", "method",
+                        "reml", "convergence", "evaluations", "method", "optimizer",
                         "conv_message", "call", "theta_est",
                         "beta_est", "beta_est_complete", "beta_aliased",
-                        "x_matrix", "y_vector", "neg_log_lik", "jac_list", "theta_vcov"
+                        "x_matrix", "y_vector", "neg_log_lik", "jac_list", "theta_vcov",
+                        "full_frame"
                       )) {
   assert_class(object, "mmrm_tmb")
   name <- match.arg(name, several.ok = TRUE)
@@ -76,6 +78,7 @@ component <- function(object,
     "call" = object$call,
     # Strings.
     "cov_type" = object$formula_parts$cov_type,
+    "subject_var" = object$formula_parts$subject_var,
     "formula" = deparse(object$call$formula),
     "dataset" = object$call$data,
     "reml" = object$reml,
@@ -94,6 +97,7 @@ component <- function(object,
       list(object$opt_details$evaluations)
     )),
     "method" = object$method,
+    "optimizer" = object$optimizer,
     "beta_est" = object$beta_est,
     "beta_est_complete" =
       if (any(object$tmb_data$x_cols_aliased)) {
@@ -110,10 +114,10 @@ component <- function(object,
     "jac_list" = object$jac_list,
     # Matrices.
     "beta_vcov" =
-      if (!is.null(object$method) && object$method %in% c("Kenward-Roger", "Kenward-Roger-Linear")) {
-        object$beta_vcov_adj
-      } else {
+      if (is.null(object$vcov) || identical(object$vcov, "Asymptotic")) {
         object$beta_vcov
+      } else {
+        object$beta_vcov_adj
       },
     "beta_vcov_complete" =
       if (any(object$tmb_data$x_cols_aliased)) {
@@ -128,6 +132,7 @@ component <- function(object,
     "varcor" = object$cov,
     "x_matrix" = object$tmb_data$x_matrix,
     "theta_vcov" = object$theta_vcov,
+    "full_frame" = object$tmb_data$full_frame,
     # If not found.
     "..foo.." =
       stop(sprintf(

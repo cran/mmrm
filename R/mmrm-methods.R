@@ -22,6 +22,8 @@
 #'
 #' @name mmrm_methods
 #'
+#' @seealso [`mmrm_tmb_methods`], [`mmrm_tidiers`] for additional methods.
+#'
 #' @examples
 #' formula <- FEV1 ~ RACE + SEX + ARMCD * AVISIT + us(AVISIT | USUBJID)
 #' object <- mmrm(formula, fev_data)
@@ -88,8 +90,8 @@ summary.mmrm <- function(object, ...) {
     "n_subjects", "n_timepoints", "n_obs",
     "beta_vcov", "varcor"
   ))
-
   components$method <- object$method
+  components$vcov <- object$vcov
   structure(
     c(
       components,
@@ -121,16 +123,16 @@ h_print_call <- function(call, n_obs, n_subjects, n_timepoints) {
     rhs <- tmp[[2]]
     pass <- nchar(deparse(rhs))
   }
-  if (!is.null(tmp <- call$data)) {
+  if (!is.null(call$data)) {
     cat(
-      "Data:       ", tmp, "(used", n_obs, "observations from",
+      "Data:       ", deparse(call$data), "(used", n_obs, "observations from",
       n_subjects, "subjects with maximum", n_timepoints, "timepoints)",
       fill = TRUE
     )
   }
-  # Only if call$weights is a string then it was explicitly given by the user.
-  if (test_string(tmp <- call$weights)) {
-    cat("Weights:    ", tmp, fill = TRUE)
+  # Display the expression of weights
+  if (!is.null(call$weights)) {
+    cat("Weights:    ", deparse(call$weights), fill = TRUE)
   }
 }
 
@@ -139,13 +141,13 @@ h_print_call <- function(call, n_obs, n_subjects, n_timepoints) {
 #' This is used in [print.summary.mmrm()].
 #'
 #' @param cov_type (`string`)\cr covariance structure abbreviation.
-#' @param n_theta (`int`)\cr number of variance parameters.
-#' @param n_groups (`int`)\cr number of groups.
+#' @param n_theta (`count`)\cr number of variance parameters.
+#' @param n_groups (`count`)\cr number of groups.
 #' @keywords internal
 h_print_cov <- function(cov_type, n_theta, n_groups) {
   assert_string(cov_type)
-  assert_int(n_theta, lower = 1L)
-  assert_int(n_groups, lower = 1L)
+  assert_count(n_theta, positive = TRUE)
+  assert_count(n_groups, positive = TRUE)
   cov_definition <- switch(cov_type,
     us = "unstructured",
     toep = "Toeplitz",
@@ -194,6 +196,7 @@ print.summary.mmrm <- function(x,
   h_print_call(x$call, x$n_obs, x$n_subjects, x$n_timepoints)
   h_print_cov(x$cov_type, x$n_theta, x$n_groups)
   cat("Method:      ", x$method, "\n", sep = "")
+  cat("Vcov Method: ", x$vcov, "\n", sep = "")
   cat("Inference:   ")
   cat(ifelse(x$reml, "REML", "ML"))
   cat("\n\n")

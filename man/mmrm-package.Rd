@@ -22,11 +22,16 @@ Useful links:
 Authors:
 \itemize{
   \item Julia Dedic \email{julia.dedic@roche.com}
-  \item Doug Kelkhoff \email{kelkhoff.douglas@gene.com}
+  \item Doug Kelkhoff \email{doug.kelkhoff@roche.com}
   \item Kevin Kunzmann \email{kevin.kunzmann@boehringer-ingelheim.com}
   \item Brian Matthew Lang \email{brian.lang@msd.com}
   \item Liming Li \email{liming.li@roche.com}
+  \item Christian Stock \email{christian.stock@boehringer-ingelheim.com}
   \item Ya Wang \email{ya.wang10@gilead.com}
+  \item Dan James \email{dan.james@astrazeneca.com}
+  \item Jonathan Sidi \email{yoni@pinpointstrategies.io}
+  \item Daniel Leibovitz \email{daniel.leibovitz@roche.com}
+  \item Daniel D. Sjoberg \email{sjobergd@gene.com} (\href{https://orcid.org/0000-0003-0862-2018}{ORCID})
 }
 
 Other contributors:
@@ -36,6 +41,7 @@ Other contributors:
   \item Gilead Sciences, Inc. [copyright holder, funder]
   \item F. Hoffmann-La Roche AG [copyright holder, funder]
   \item Merck Sharp & Dohme, Inc. [copyright holder, funder]
+  \item AstraZeneca plc [copyright holder, funder]
 }
 
 }

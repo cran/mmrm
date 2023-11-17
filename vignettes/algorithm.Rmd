@@ -1,14 +1,11 @@
 ---
-title: "Details of the Model Fitting in `mmrm`"
+title: "Model Fitting Algorithm"
 package: mmrm
 output:
-  rmarkdown::html_document:
-          theme: "spacelab"
-          highlight: "kate"
+  rmarkdown::html_vignette:
           toc: true
-          toc_float: true
 vignette: |
-  %\VignetteIndexEntry{Details of the Model Fitting in `mmrm`}
+  %\VignetteIndexEntry{Model Fitting Algorithm}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options:

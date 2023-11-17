@@ -9,11 +9,22 @@
 #' @importFrom Rcpp evalCpp
 #' @import checkmate
 #' @importFrom lifecycle deprecated
+#' @importFrom Matrix .bdiag
 #' @importFrom methods is
-#' @importFrom numDeriv genD
 #' @importFrom stats acf
 #' @importFrom stringr boundary
 #' @importFrom parallel clusterApply
 #' @importFrom Rdpack reprompt
 #' @importFrom utils modifyList
+#' @importFrom tibble as_tibble
 NULL
+
+#' @importFrom generics tidy
+#' @export
+generics::tidy
+#' @importFrom generics glance
+#' @export
+generics::glance
+#' @importFrom generics augment
+#' @export
+generics::augment

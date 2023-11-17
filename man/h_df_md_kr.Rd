@@ -4,20 +4,20 @@
 \alias{h_df_md_kr}
 \title{Calculation of Kenward-Roger Degrees of Freedom for Multi-Dimensional Contrast}
 \usage{
-h_df_md_kr(object, contrast, linear = FALSE)
+h_df_md_kr(object, contrast)
 }
 \arguments{
-\item{object}{(\code{mmrm})\cr object.}
+\item{object}{(\code{mmrm})\cr the MMRM fit.}
 
-\item{contrast}{(\code{matrix})\cr contrast matrix.}
-
-\item{linear}{(\code{logical})\cr whether to use linear Kenward-Roger approximation.}
+\item{contrast}{(\code{matrix})\cr numeric contrast matrix, if given a \code{numeric}
+then this is coerced to a row vector. Note that this should not include
+elements for singular coefficient estimates, i.e. only refer to the
+actually estimated coefficients.}
 }
 \value{
 List with \code{num_df}, \code{denom_df}, \code{f_stat} and \code{p_val} (2-sided p-value).
 }
 \description{
-Calculates the Kenward-Roger degree of freedom, F statistic and p value for multi-dimensional contrast.
 Used in \code{\link[=df_md]{df_md()}} if method is "Kenward-Roger" or "Kenward-Roger-Linear".
 }
 \keyword{internal}

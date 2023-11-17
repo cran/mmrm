@@ -4,6 +4,15 @@ get_mmrm_tmb <- function() {
   .mmrm_tmb_example
 }
 
+.mmrm_tmb_trans <- fit_mmrm(
+  FEV1 ~ log(FEV1_BL) + ar1(AVISIT | USUBJID),
+  data = fev_data, weights = rep(1, nrow(fev_data))
+)
+
+get_mmrm_transformed <- function() {
+  .mmrm_tmb_trans
+}
+
 .tmb_formula_rank_deficient <- FEV1 ~ SEX + SEX2 + us(AVISIT | USUBJID)
 .mmrm_tmb_dat_rank_deficient <- cbind(fev_data, SEX2 = fev_data$SEX) # nolint
 .mmrm_tmb_example_rk_deficient <- fit_mmrm(
@@ -56,11 +65,30 @@ get_mmrm_kr <- function() {
   .mmrm_kr
 }
 
-.mmrm_krl <- mmrm(.mmrm_kr_formula, data = fev_data, method = "Kenward-Roger-Linear")
+.mmrm_krl <- mmrm(.mmrm_kr_formula, data = fev_data, method = "Kenward-Roger", vcov = "Kenward-Roger-Linear")
 get_mmrm_krl <- function() {
   .mmrm_krl
 }
 
+.mmrm_emp <- mmrm(.mmrm_kr_formula, data = fev_data, vcov = "Empirical", method = "Residual")
+get_mmrm_emp <- function() {
+  .mmrm_emp
+}
+
+.mmrm_bw <- mmrm(.mmrm_kr_formula, data = fev_data, method = "Between-Within")
+get_mmrm_bw <- function() {
+  .mmrm_bw
+}
+
+.mmrm_jackknife <- mmrm(.mmrm_kr_formula, data = fev_data, vcov = "Empirical-Jackknife", method = "Residual")
+get_mmrm_jack <- function() {
+  .mmrm_jackknife
+}
+
+.mmrm_brl <- mmrm(.mmrm_kr_formula, data = fev_data, vcov = "Empirical-Bias-Reduced", method = "Residual")
+get_mmrm_brl <- function() {
+  .mmrm_brl
+}
 
 square_matrix <- function(values_by_row) {
   n <- length(values_by_row)
