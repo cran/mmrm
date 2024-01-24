@@ -31,6 +31,55 @@ mmrm_control(
   drop_visit_levels = FALSE
 )
 
+## ----data_generation----------------------------------------------------------
+gen_data <- function(
+    n = 100,
+    mu = -100 / 52,
+    delta = 50 / 52,
+    mua = 2000,
+    sigmaa = 300,
+    sigmab = 60,
+    corab = 0.2,
+    sigma = 10,
+    times = c(0, 2, 6, 12, 24, 36, 52, 70, 88, 104)) {
+  nt <- length(times)
+  out <- data.frame(
+    pts = rep(seq_len(n * 2), each = nt),
+    trt = rep(c("Treatment", "Placebo"), rep(n * nt, 2)),
+    time = rep(times, n * 2)
+  )
+
+  covab <- corab * sigmaa * sigmab # cov between a and b
+  cov <- matrix(c(sigmaa^2, covab, covab, sigmab^2), ncol = 2) # Cov matrix for the slope and intercept
+  si <- rbind(
+    MASS::mvrnorm(n, mu = c(mua, mu + delta), Sigma = cov),
+    MASS::mvrnorm(n, mu = c(mua, mu + delta), Sigma = cov)
+  )
+  idx <- rep(seq_len(n * 2), each = nt)
+  out$fev1 <- si[idx, 1] + si[idx, 2] * times + rnorm(n * nt * 2, sd = sigma)
+  out$trt <- factor(out$trt)
+  out$time <- factor(out$time)
+  out$pts <- factor(out$pts)
+  return(out)
+}
+set.seed(123)
+out <- gen_data()
+
+## ----show_variance------------------------------------------------------------
+vapply(split(out$fev1, out$time), sd, FUN.VALUE = 1)
+
+## ----mmrm_using_emp_start, eval = !mmrm:::is_r_devel_linux_clang()------------
+mmrm(fev1 ~ trt * time + us(time | pts), data = out, start = emp_start)
+
+## ----mmrm_using_std_start, eval = FALSE---------------------------------------
+#  mmrm(
+#    fev1 ~ trt * time + us(time | pts),
+#    data = out,
+#    start = std_start,
+#    optimizer = "nlminb",
+#    optimizer_control = list(eval.max = 1000, iter.max = 1000)
+#  )
+
 ## ----common-changes-reml------------------------------------------------------
 fit_ml <- mmrm(
   formula = FEV1 ~ RACE + ARMCD * AVISIT + us(AVISIT | USUBJID),
@@ -223,6 +272,16 @@ lsmeans_by_visit
 
 ## ----pdiff--------------------------------------------------------------------
 pairs(lsmeans_by_visit, reverse = TRUE)
+
+## ----pdiffci------------------------------------------------------------------
+confint(pairs(lsmeans_by_visit, reverse = TRUE))
+
+## ----car_type2----------------------------------------------------------------
+library(car)
+Anova(fit, type = "II")
+
+## ----car_type3----------------------------------------------------------------
+Anova(fit, type = "III")
 
 ## ----include = FALSE----------------------------------------------------------
 library(mmrm)

@@ -203,15 +203,7 @@ test_that("h_summarize_all_fits works as expected", {
   all_fits <- list(mod_fit, mod_fit2)
   result <- expect_silent(h_summarize_all_fits(all_fits))
 
-  # NOTE:
-  # Test currently fails on R-devel on Fedora with clang for the first optimizer
-  # mmrm v0.1.5 @ r-devel-linux-x86_64-fedora-clang
-  #   `actual$log_liks`: -2155.280410081641 -1693.224938122514
-  #   `expected$log_liks`: -1693.224935585730 -1693.224938122510
-  #
-  # As this failure only appears on R-devel on Fedora with clang, we are
-  # temporarily skipping this test on CRAN until we can reproduce the behavior.
-  skip_on_cran()
+  skip_if_r_devel_linux_clang()
 
   expected <- list(
     warnings = list(NULL, NULL),
@@ -219,11 +211,11 @@ test_that("h_summarize_all_fits works as expected", {
     log_liks = c(-1693.22493558573, -1693.22493812251),
     converged = c(TRUE, TRUE)
   )
-
   expect_equal(result, expected)
 })
 
 test_that("h_summarize_all_fits works when some list elements are try-error objects", {
+  skip_if_r_devel_linux_clang()
   mod_fit <- get_mmrm()
   mod_fit2 <- try(stop("bla"), silent = TRUE)
   mod_fit3 <- get_mmrm()
@@ -437,6 +429,118 @@ test_that("mmrm works for constructed control", {
     reml = TRUE,
     control = mmrm_control(optimizer = c("BFGS", "CG"))
   ))
+})
+
+test_that("mmrm works for start = NULL", {
+  expect_silent(mmrm(
+    FEV1 ~ ARMCD + ar1(AVISIT | SEX / USUBJID),
+    data = fev_data,
+    reml = TRUE,
+    control = mmrm_control(optimizer = c("BFGS", "CG"), start = NULL)
+  ))
+})
+
+test_that("mmrm returns the correct best fit", {
+  opts <- list(
+    a = h_partial_fun_args(fail_optimizer, message = "this is wrong"),
+    b = h_partial_fun_args(fail_optimizer, message = "this is wrong too"),
+    c = h_partial_fun_args(silly_optimizer, value_add = 0, message = "silly success")
+  )
+  fit <- expect_silent(mmrm(
+    FEV1 ~ ARMCD + ar1(AVISIT | SEX / USUBJID),
+    data = fev_data,
+    reml = TRUE,
+    control = mmrm_control(optimizers = opts)
+  ))
+  expect_identical(
+    fit$opt_details,
+    list(convergence = 0, message = "silly success")
+  )
+})
+
+## start values ----
+
+test_that("start can be emp_start or std_start and they work", {
+  expect_silent(
+    mmrm(
+      formula = FEV1 ~ ARMCD + us(AVISIT | USUBJID),
+      data = fev_data,
+      start = emp_start
+    )
+  )
+  expect_silent(
+    mmrm(
+      formula = FEV1 ~ ARMCD + us(AVISIT | USUBJID),
+      data = fev_data,
+      start = std_start
+    )
+  )
+})
+
+test_that("mmrm fails if start function does not provide correct values", {
+  wrong_start <- function(...) {
+    c(NA_real_, 0L)
+  }
+  expect_error(
+    mmrm(
+      formula = FEV1 ~ ARMCD + us(AVISIT | USUBJID),
+      data = fev_data,
+      start = wrong_start
+    ),
+    "Assertion on 'start_values' failed: Must have length 10, but has length 2."
+  )
+  expect_error(
+    mmrm(
+      formula = FEV1 ~ ARMCD + ar1(AVISIT | USUBJID),
+      data = fev_data,
+      start = wrong_start
+    ),
+    "Assertion on 'start_values' failed: Contains missing values \\(element 1\\)"
+  )
+})
+
+test_that("mmrm fails if start function fails", {
+  wrong_start <- function(...) {
+    stop("this is wrong")
+  }
+  expect_error(
+    mmrm(
+      formula = FEV1 ~ ARMCD + us(AVISIT | USUBJID),
+      data = fev_data,
+      start = wrong_start
+    ),
+    "this is wrong"
+  )
+})
+
+test_that("mmrm works for transformed response using emp_start", {
+  expect_silent(
+    mmrm(
+      formula = log(FEV1) ~ ARMCD + exp(FEV1_BL) + us(AVISIT | USUBJID),
+      data = fev_data,
+      start = std_start
+    )
+  )
+  expect_silent(
+    mmrm(
+      formula = log(FEV1) ~ ARMCD + exp(FEV1_BL) + us(AVISIT | USUBJID),
+      data = fev_data,
+      start = emp_start
+    )
+  )
+})
+
+test_that("mmrm works for character covariate using emp_start", {
+  fev_data2 <- fev_data
+  fev_data2$ARMCD <- as.character(fev_data2$ARMCD)
+  fev_data2$USUBJID <- as.character(fev_data2$USUBJID)
+  expect_silent(
+    mmrm(
+      formula = log(FEV1) ~ ARMCD + exp(FEV1_BL) + us(AVISIT | USUBJID),
+      data = fev_data2,
+      start = emp_start
+    )
+  )
 })
 
 test_that("mmrm still works for deprecated 'automatic' optimizer", {
