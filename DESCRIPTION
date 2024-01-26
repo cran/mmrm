@@ -1,7 +1,7 @@
 Type: Package
 Package: mmrm
 Title: Mixed Models for Repeated Measures
-Version: 0.3.9
+Version: 0.3.10
 Authors@R: c(
     person("Daniel", "Sabanes Bove", , "daniel.sabanes_bove@roche.com", role = c("aut", "cre")),
     person("Julia", "Dedic", , "julia.dedic@roche.com", role = "aut"),
@@ -64,7 +64,7 @@ Collate: 'between-within.R' 'catch-routine-registration.R'
         'residual.R' 'utils-nse.R' 'utils-formula.R' 'satterthwaite.R'
         'skipping.R' 'tidiers.R' 'testing.R' 'tmb-methods.R' 'tmb.R'
         'interop-emmeans.R' 'interop-parsnip.R' 'interop-car.R' 'zzz.R'
-Packaged: 2024-01-25 19:28:59 UTC; sabanesd
+Packaged: 2024-01-26 10:04:23 UTC; sabanesd
 Author: Daniel Sabanes Bove [aut, cre],
   Julia Dedic [aut],
   Doug Kelkhoff [aut],
@@ -85,4 +85,4 @@ Author: Daniel Sabanes Bove [aut, cre],
   AstraZeneca plc [cph, fnd]
 Maintainer: Daniel Sabanes Bove <daniel.sabanes_bove@roche.com>
 Repository: CRAN
-Date/Publication: 2024-01-25 22:40:06 UTC
+Date/Publication: 2024-01-26 12:10:04 UTC
