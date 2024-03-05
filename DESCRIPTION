@@ -1,14 +1,14 @@
 Type: Package
 Package: mmrm
 Title: Mixed Models for Repeated Measures
-Version: 0.3.10
+Version: 0.3.11
 Authors@R: c(
     person("Daniel", "Sabanes Bove", , "daniel.sabanes_bove@roche.com", role = c("aut", "cre")),
+    person("Liming", "Li", , "liming.li@roche.com", role = "aut"),
     person("Julia", "Dedic", , "julia.dedic@roche.com", role = "aut"),
     person("Doug", "Kelkhoff", , "doug.kelkhoff@roche.com", role = "aut"),
     person("Kevin", "Kunzmann", , "kevin.kunzmann@boehringer-ingelheim.com", role = "aut"),
     person("Brian Matthew", "Lang", , "brian.lang@msd.com", role = "aut"),
-    person("Liming", "Li", , "liming.li@roche.com", role = "aut"),
     person("Christian", "Stock", , "christian.stock@boehringer-ingelheim.com", role = "aut"),
     person("Ya", "Wang", , "ya.wang10@gilead.com", role = "aut"),
     person("Craig", "Gower-Page", , "craig.gower-page@roche.com", role = "ctb"),
@@ -51,7 +51,6 @@ Suggests: car (>= 3.1.2), cli, clubSandwich, clusterGeneration, dplyr,
 LinkingTo: Rcpp, RcppEigen, testthat, TMB (>= 1.9.1)
 VignetteBuilder: knitr
 RdMacros: Rdpack
-biocViews:
 Config/testthat/edition: 3
 Encoding: UTF-8
 Language: en-US
@@ -64,13 +63,13 @@ Collate: 'between-within.R' 'catch-routine-registration.R'
         'residual.R' 'utils-nse.R' 'utils-formula.R' 'satterthwaite.R'
         'skipping.R' 'tidiers.R' 'testing.R' 'tmb-methods.R' 'tmb.R'
         'interop-emmeans.R' 'interop-parsnip.R' 'interop-car.R' 'zzz.R'
-Packaged: 2024-01-26 10:04:23 UTC; sabanesd
+Packaged: 2024-03-04 20:26:57 UTC; sabanesd
 Author: Daniel Sabanes Bove [aut, cre],
+  Liming Li [aut],
   Julia Dedic [aut],
   Doug Kelkhoff [aut],
   Kevin Kunzmann [aut],
   Brian Matthew Lang [aut],
-  Liming Li [aut],
   Christian Stock [aut],
   Ya Wang [aut],
   Craig Gower-Page [ctb],
@@ -85,4 +84,4 @@ Author: Daniel Sabanes Bove [aut, cre],
   AstraZeneca plc [cph, fnd]
 Maintainer: Daniel Sabanes Bove <daniel.sabanes_bove@roche.com>
 Repository: CRAN
-Date/Publication: 2024-01-26 12:10:04 UTC
+Date/Publication: 2024-03-05 08:10:02 UTC

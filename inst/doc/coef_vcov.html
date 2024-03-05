@@ -14,21 +14,56 @@
 
 <title>Coefficients Covariance Matrix Adjustment</title>
 
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
 
 <style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
 
 
 
 
 
 
+<style type="text/css">
+
+div.csl-bib-body { }
+div.csl-entry {
+clear: both;
+}
+.hanging div.csl-entry {
+margin-left:2em;
+text-indent:-2em;
+}
+div.csl-left-margin {
+min-width:2em;
+float:left;
+}
+div.csl-right-inline {
+margin-left:2em;
+padding-left:1em;
+}
+div.csl-indent {
+margin-left: 2em;
+}
+</style>
 
 <style type="text/css">body {
 background-color: #fff;
@@ -222,71 +257,105 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 
-<h1 class="title toc-ignore">Coefficients Covariance Matrix Adjustment</h1>
+<h1 class="title toc-ignore">Coefficients Covariance Matrix
+Adjustment</h1>
 
 
 <div id="TOC">
 <ul>
-<li><a href="#introduction">Introduction</a><ul>
-<li><a href="#asymptotic-covariance">Asymptotic Covariance</a></li>
-<li><a href="#empirical-covariance">Empirical Covariance</a></li>
-<li><a href="#jackknife-covariance">Jackknife Covariance</a></li>
-<li><a href="#bias-reduced-covariance">Bias-Reduced Covariance</a></li>
-<li><a href="#kenward-roger-covariance">Kenward-Roger Covariance</a></li>
+<li><a href="#introduction" id="toc-introduction">Introduction</a>
+<ul>
+<li><a href="#asymptotic-covariance" id="toc-asymptotic-covariance">Asymptotic Covariance</a></li>
+<li><a href="#empirical-covariance" id="toc-empirical-covariance">Empirical Covariance</a></li>
+<li><a href="#jackknife-covariance" id="toc-jackknife-covariance">Jackknife Covariance</a></li>
+<li><a href="#bias-reduced-covariance" id="toc-bias-reduced-covariance">Bias-Reduced Covariance</a></li>
+<li><a href="#kenward-roger-covariance" id="toc-kenward-roger-covariance">Kenward-Roger Covariance</a></li>
 </ul></li>
 </ul>
 </div>
 
-<p>Here we describe the variance-covariance matrix adjustment of coefficients.</p>
+<p>Here we describe the variance-covariance matrix adjustment of
+coefficients.</p>
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>To estimate the covariance matrix of coefficients, there are many ways. In <code>mmrm</code> package, we implemented asymptotic, empirical, Jackknife and Kenward-Roger methods. For simplicity, the following derivation are all for unweighted mmrm. For weighted mmrm, we can follow the <a href="algorithm.html#weighted-least-squares-estimator">details of weighted least square estimator</a>.</p>
+<p>To estimate the covariance matrix of coefficients, there are many
+ways. In <code>mmrm</code> package, we implemented asymptotic,
+empirical, Jackknife and Kenward-Roger methods. For simplicity, the
+following derivation are all for unweighted mmrm. For weighted mmrm, we
+can follow the <a href="algorithm.html#weighted-least-squares-estimator">details of
+weighted least square estimator</a>.</p>
 <div id="asymptotic-covariance" class="section level2">
 <h2>Asymptotic Covariance</h2>
 <p>Asymptotic covariance are derived based on the estimate of <span class="math inline">\(\beta\)</span>.</p>
-<p>Following the definition in <a href="algorithm.html#linear-model">details in model fitting</a>, we have</p>
+<p>Following the definition in <a href="algorithm.html#linear-model">details in model fitting</a>, we
+have</p>
 <p><span class="math display">\[
   \hat\beta = (X^\top W X)^{-1} X^\top W Y
 \]</span></p>
 <p><span class="math display">\[
-  cov(\hat\beta) = (X^\top W X)^{-1} X^\top W cov(\epsilon) W X (X^\top W X)^{-1} = (X^\top W X)^{-1}
+  cov(\hat\beta) = (X^\top W X)^{-1} X^\top W cov(\epsilon) W X (X^\top
+W X)^{-1} = (X^\top W X)^{-1}
 \]</span></p>
-<p>Where <span class="math inline">\(W\)</span> is the block diagonal matrix of inverse of covariance matrix of <span class="math inline">\(\epsilon\)</span>.</p>
+<p>Where <span class="math inline">\(W\)</span> is the block diagonal
+matrix of inverse of covariance matrix of <span class="math inline">\(\epsilon\)</span>.</p>
 </div>
 <div id="empirical-covariance" class="section level2">
 <h2>Empirical Covariance</h2>
-<p>Empirical covariance, also known as the robust sandwich estimator, or “CR0”, is derived by replacing the covariance matrix of <span class="math inline">\(\epsilon\)</span> by observed covariance matrix.</p>
+<p>Empirical covariance, also known as the robust sandwich estimator, or
+“CR0”, is derived by replacing the covariance matrix of <span class="math inline">\(\epsilon\)</span> by observed covariance
+matrix.</p>
 <p><span class="math display">\[
-  cov(\hat\beta) = (X^\top W X)^{-1}(\sum_{i}{X_i^\top W_i \hat\epsilon_i\hat\epsilon_i^\top W_i X_i})(X^\top W X)^{-1}
-  = (X^\top W X)^{-1}(\sum_{i}{X_i^\top L_{i} L_{i}^\top \hat\epsilon_i\hat\epsilon_i^\top L_{i} L_{i}^\top X_i})(X^\top W X)^{-1}
+  cov(\hat\beta) = (X^\top W X)^{-1}(\sum_{i}{X_i^\top W_i
+\hat\epsilon_i\hat\epsilon_i^\top W_i X_i})(X^\top W X)^{-1}
+  = (X^\top W X)^{-1}(\sum_{i}{X_i^\top L_{i} L_{i}^\top
+\hat\epsilon_i\hat\epsilon_i^\top L_{i} L_{i}^\top X_i})(X^\top W
+X)^{-1}
 \]</span></p>
-<p>Where <span class="math inline">\(W_i\)</span> is the block diagonal part for subject <span class="math inline">\(i\)</span> of <span class="math inline">\(W\)</span> matrix, <span class="math inline">\(\hat\epsilon_i\)</span> is the observed residuals for subject i, <span class="math inline">\(L_i\)</span> is the Cholesky factor of <span class="math inline">\(\Sigma_i^{-1}\)</span> (<span class="math inline">\(W_i = L_i L_i^\top\)</span>).</p>
-<p>See the detailed explanation of these formulas in the <a href="empirical_wls.html">Weighted Least Square Empirical Covariance</a> vignette.</p>
+<p>Where <span class="math inline">\(W_i\)</span> is the block diagonal
+part for subject <span class="math inline">\(i\)</span> of <span class="math inline">\(W\)</span> matrix, <span class="math inline">\(\hat\epsilon_i\)</span> is the observed residuals
+for subject i, <span class="math inline">\(L_i\)</span> is the Cholesky
+factor of <span class="math inline">\(\Sigma_i^{-1}\)</span> (<span class="math inline">\(W_i = L_i L_i^\top\)</span>).</p>
+<p>See the detailed explanation of these formulas in the <a href="empirical_wls.html">Weighted Least Square Empirical Covariance</a>
+vignette.</p>
 </div>
 <div id="jackknife-covariance" class="section level2">
 <h2>Jackknife Covariance</h2>
-<p>Jackknife method in <code>mmrm</code> is the “leave-one-cluster-out” method. It is also known as “CR3”. Following <span class="citation">McCaffrey and Bell (2003)</span>, we have</p>
+<p>Jackknife method in <code>mmrm</code> is the “leave-one-cluster-out”
+method. It is also known as “CR3”. Following <span class="citation">McCaffrey and Bell (2003)</span>, we have</p>
 <p><span class="math display">\[
-  cov(\hat\beta) = (X^\top W X)^{-1}(\sum_{i}{X_i^\top L_{i} (I_{i} - H_{ii})^{-1} L_{i}^\top \hat\epsilon_i\hat\epsilon_i^\top L_{i} (I_{i} - H_{ii})^{-1} L_{i}^\top X_i})(X^\top W X)^{-1}
+  cov(\hat\beta) = (X^\top W X)^{-1}(\sum_{i}{X_i^\top L_{i} (I_{i} -
+H_{ii})^{-1} L_{i}^\top \hat\epsilon_i\hat\epsilon_i^\top L_{i} (I_{i} -
+H_{ii})^{-1} L_{i}^\top X_i})(X^\top W X)^{-1}
 \]</span></p>
 <p>where</p>
-<p><span class="math display">\[H_{ii} = X_i(X^\top X)^{-1}X_i^\top\]</span></p>
-<p>Please note that in the paper there is an additional scale parameter <span class="math inline">\(\frac{n-1}{n}\)</span> where <span class="math inline">\(n\)</span> is the number of subjects, here we do not include this parameter.</p>
+<p><span class="math display">\[H_{ii} = X_i(X^\top
+X)^{-1}X_i^\top\]</span></p>
+<p>Please note that in the paper there is an additional scale parameter
+<span class="math inline">\(\frac{n-1}{n}\)</span> where <span class="math inline">\(n\)</span> is the number of subjects, here we do
+not include this parameter.</p>
 </div>
 <div id="bias-reduced-covariance" class="section level2">
 <h2>Bias-Reduced Covariance</h2>
-<p>Bias-reduced method, also known as “CR2”, provides unbiased under correct working model. Following <span class="citation">McCaffrey and Bell (2003)</span>, we have <span class="math display">\[
-  cov(\hat\beta) = (X^\top W X)^{-1}(\sum_{i}{X_i^\top L_{i} (I_{i} - H_{ii})^{-1/2} L_{i}^\top \hat\epsilon_i\hat\epsilon_i^\top L_{i} (I_{i} - H_{ii})^{-1} L_{i}^\top X_i})(X^\top W X)^{-1}
+<p>Bias-reduced method, also known as “CR2”, provides unbiased under
+correct working model. Following <span class="citation">McCaffrey and
+Bell (2003)</span>, we have <span class="math display">\[
+  cov(\hat\beta) = (X^\top W X)^{-1}(\sum_{i}{X_i^\top L_{i} (I_{i} -
+H_{ii})^{-1/2} L_{i}^\top \hat\epsilon_i\hat\epsilon_i^\top L_{i} (I_{i}
+- H_{ii})^{-1} L_{i}^\top X_i})(X^\top W X)^{-1}
 \]</span></p>
 <p>where</p>
-<p><span class="math display">\[H_{ii} = X_i(X^\top X)^{-1}X_i^\top\]</span></p>
+<p><span class="math display">\[H_{ii} = X_i(X^\top
+X)^{-1}X_i^\top\]</span></p>
 </div>
 <div id="kenward-roger-covariance" class="section level2">
 <h2>Kenward-Roger Covariance</h2>
-<p>Kenward-Roger covariance is an adjusted covariance matrix for small sample size. Details can be found in <a href="kenward.html#mathematical-details-of-kenward-roger-method">Kenward-Roger</a></p>
-<div id="refs" class="references">
-<div id="ref-mccaffrey2003bias">
-<p>McCaffrey, Daniel F, and Robert M Bell. 2003. “Bias Reduction in Standard Errors for Linear Regression with Multi-Stage Samples.” <em>Quality Control and Applied Statistics</em> 48 (6): 677–82.</p>
+<p>Kenward-Roger covariance is an adjusted covariance matrix for small
+sample size. Details can be found in <a href="kenward.html#mathematical-details-of-kenward-roger-method">Kenward-Roger</a></p>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-mccaffrey2003bias" class="csl-entry">
+McCaffrey, Daniel F, and Robert M Bell. 2003. <span>“Bias Reduction in
+Standard Errors for Linear Regression with Multi-Stage Samples.”</span>
+<em>Quality Control and Applied Statistics</em> 48 (6): 677–82.
 </div>
 </div>
 </div>
