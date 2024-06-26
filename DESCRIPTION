@@ -1,9 +1,9 @@
 Type: Package
 Package: mmrm
 Title: Mixed Models for Repeated Measures
-Version: 0.3.11
+Version: 0.3.12
 Authors@R: c(
-    person("Daniel", "Sabanes Bove", , "daniel.sabanes_bove@roche.com", role = c("aut", "cre")),
+    person("Daniel", "Sabanes Bove", , "daniel.sabanes_bove@rconis.com", role = c("aut", "cre")),
     person("Liming", "Li", , "liming.li@roche.com", role = "aut"),
     person("Julia", "Dedic", , "julia.dedic@roche.com", role = "aut"),
     person("Doug", "Kelkhoff", , "doug.kelkhoff@roche.com", role = "aut"),
@@ -63,7 +63,7 @@ Collate: 'between-within.R' 'catch-routine-registration.R'
         'residual.R' 'utils-nse.R' 'utils-formula.R' 'satterthwaite.R'
         'skipping.R' 'tidiers.R' 'testing.R' 'tmb-methods.R' 'tmb.R'
         'interop-emmeans.R' 'interop-parsnip.R' 'interop-car.R' 'zzz.R'
-Packaged: 2024-03-04 20:26:57 UTC; sabanesd
+Packaged: 2024-06-26 13:46:15 UTC; sabanesd
 Author: Daniel Sabanes Bove [aut, cre],
   Liming Li [aut],
   Julia Dedic [aut],
@@ -82,6 +82,6 @@ Author: Daniel Sabanes Bove [aut, cre],
   F. Hoffmann-La Roche AG [cph, fnd],
   Merck Sharp & Dohme, Inc. [cph, fnd],
   AstraZeneca plc [cph, fnd]
-Maintainer: Daniel Sabanes Bove <daniel.sabanes_bove@roche.com>
+Maintainer: Daniel Sabanes Bove <daniel.sabanes_bove@rconis.com>
 Repository: CRAN
-Date/Publication: 2024-03-05 08:10:02 UTC
+Date/Publication: 2024-06-26 15:00:09 UTC
