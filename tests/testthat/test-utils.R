@@ -188,57 +188,6 @@ test_that("h_default_value works", {
   expect_identical(h_default_value(NULL, x), x)
 })
 
-# h_h_factor_ref ----
-
-test_that("h_factor_ref works", {
-  ref <- factor(c("a", "b", "c"), levels = c("c", "b", "a"))
-  x <- c("a", "b")
-  f <- expect_silent(h_factor_ref(x, ref))
-  expect_identical(levels(f), levels(ref))
-  x <- factor(c("a", "b"))
-  f <- expect_silent(h_factor_ref(x, ref))
-  expect_identical(levels(f), levels(ref))
-})
-
-test_that("h_factor_ref fails on non existing level", {
-  ref <- factor(c("a", "b", "c"), levels = c("c", "b", "a"))
-  x <- c("a", "d")
-  expect_error(h_factor_ref(x, ref), "has additional elements")
-})
-
-test_that("h_factor_ref works with character", {
-  ref <- c("a", "b", "c")
-  x <- c("a", "b")
-  f <- expect_silent(h_factor_ref(x, ref))
-  expect_identical(levels(f), ref)
-})
-
-test_that("h_factor ref allows NA in x", {
-  ref <- c("a", "b", "c")
-  x <- c("a", "b", NA)
-  f <- expect_silent(h_factor_ref(x, ref))
-  expect_identical(levels(f), ref)
-})
-
-# h_factor_ref_data ----
-
-test_that("h_factor_ref_data works", {
-  df <- data.frame(
-    RACE = c("White", "White"),
-    SEX = factor(c("Female", "Male"), levels = c("Female", "Male")),
-    AVISIT = factor(c("VIS1", "VIS2"), levels = c("VIS2", "VIS1")),
-    ARMCD = factor(c("PBO", "TRT"), levels = c("TRT", "PBO")),
-    non_related = c("AA", "BB")
-  )
-  fit <- get_mmrm()
-  f <- expect_silent(h_factor_ref_data(fit, df))
-  assert_factor(f$RACE, levels = levels(fit$tmb_data$full_frame$RACE))
-  assert_factor(f$SEX, levels = levels(fit$tmb_data$full_frame$SEX))
-  assert_factor(f$AVISIT, levels = levels(fit$tmb_data$full_frame$AVISIT))
-  assert_factor(f$ARMCD, levels = levels(fit$tmb_data$full_frame$ARMCD))
-  assert_character(f$non_related)
-})
-
 # std_start ----
 
 test_that("std_start works", {
@@ -332,4 +281,74 @@ test_that("emp_start works", {
     emp_start(full_frame, model_formula, visit_var, subject_var, n_visits, n_subjects, subject_groups),
     h_get_theta_from_cov(emp_mat)
   )
+})
+
+# h_extra_levels ----
+
+test_that("h_extra_levels works as expected", {
+  a <- factor(c("a", "b", "c"), levels = c("a", "b", "c", "d"))
+  expect_true(h_extra_levels(a))
+  expect_false(h_extra_levels(rnorm(100)))
+  expect_false(h_extra_levels(factor(c("a", "b", "c", "d"))))
+})
+
+# h_drop_levels ----
+
+test_that("h_drop_levels works as expected", {
+  data <- data.frame(
+    a = factor(letters[1:3], levels = letters[1:4]),
+    b = factor(letters[1:3], levels = letters[1:4]),
+    c = factor(letters[1:3], levels = letters[1:4]),
+    d = factor(letters[1:3], levels = letters[1:4])
+  )
+  expect_message(
+    df <- h_drop_levels(data, "a", "b", "c"),
+    "Some factor levels are dropped due to singular design matrix: d"
+  )
+  expect_identical(
+    levels(df$a),
+    letters[1:3]
+  )
+  expect_identical(
+    levels(df$b),
+    letters[1:4]
+  )
+  expect_identical(
+    levels(df$c),
+    letters[1:4]
+  )
+  expect_identical(
+    levels(df$d),
+    letters[1:3]
+  )
+})
+
+# h_tmb_warn_optimization ----
+
+test_that("h_tmb_warn_optimization works as expected", {
+  TMB::config(optimize.instantly = 1, DLL = "mmrm")
+  expect_warning(
+    h_tmb_warn_optimization(),
+    "TMB is configured to optimize instantly"
+  )
+  TMB::config(optimize.instantly = 0, DLL = "mmrm")
+  expect_silent(h_tmb_warn_optimization())
+})
+
+# h_get_na_action ----
+
+test_that("h_get_na_action works for strings", {
+  expect_identical(h_get_na_action("na.fail"), stats::na.fail)
+  expect_identical(h_get_na_action("na.omit"), stats::na.omit)
+  expect_identical(h_get_na_action("na.exclude"), stats::na.exclude)
+  expect_identical(h_get_na_action("na.pass"), stats::na.pass)
+  expect_identical(h_get_na_action("na.contiguous"), stats::na.contiguous)
+})
+
+test_that("h_get_na_action works for functions", {
+  expect_identical(h_get_na_action(stats::na.fail), stats::na.fail)
+  expect_identical(h_get_na_action(stats::na.omit), stats::na.omit)
+  expect_identical(h_get_na_action(stats::na.exclude), stats::na.exclude)
+  expect_identical(h_get_na_action(stats::na.pass), stats::na.pass)
+  expect_identical(h_get_na_action(stats::na.contiguous), stats::na.contiguous)
 })

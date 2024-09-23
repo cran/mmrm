@@ -334,14 +334,14 @@ test_that("h_mmrm_tmb_data correctly processes design matrix below full rank cor
   formula <- FEV1 ~ RACE + SEX + ARMCD * AVISIT + us(AVISIT | USUBJID)
   formula_parts <- h_mmrm_tmb_formula_parts(formula)
   dat <- fev_data[11:25, ]
-  result <- expect_silent(h_mmrm_tmb_data(
+  expect_message(result <- h_mmrm_tmb_data(
     formula_parts,
     dat,
     weights = rep(1, nrow(dat)),
     reml = FALSE,
     singular = "drop",
     drop_visit_levels = TRUE
-  ))
+  ), "Some factor levels are dropped due to singular design matrix: RACE")
   assert_true(qr(result$x_matrix)$rank == ncol(result$x_matrix))
   assert_true(sum(result$x_cols_aliased) == 2)
   assert_set_equal(names(which(!result$x_cols_aliased)), colnames(result$x_matrix))
@@ -352,13 +352,16 @@ test_that("h_mmrm_tmb_data gives error for rank deficient design matrix when not
   formula_parts <- h_mmrm_tmb_formula_parts(formula)
   dat <- fev_data[11:25, ]
   expect_error(
-    h_mmrm_tmb_data(
-      formula_parts,
-      dat,
-      weights = rep(1, nrow(dat)),
-      reml = FALSE,
-      singular = "error",
-      drop_visit_levels = TRUE
+    expect_message(
+      h_mmrm_tmb_data(
+        formula_parts,
+        dat,
+        weights = rep(1, nrow(dat)),
+        reml = FALSE,
+        singular = "error",
+        drop_visit_levels = TRUE
+      ),
+      "Some factor levels are dropped due to singular design matrix: RACE"
     ),
     paste(
       "design matrix only has rank 8 and 2 columns (ARMCDTRT:AVISITVIS2, ARMCDTRT:AVISITVIS3)",
@@ -807,6 +810,98 @@ test_that("h_mmrm_tmb_check_conv warns if theta_vcov is singular", {
 
   mmrm_tmb <- structure(
     list(theta_vcov = chol_m %*% t(chol_m)),
+    class = "mmrm_tmb"
+  )
+  expect_warning(
+    h_mmrm_tmb_check_conv(tmb_opt, mmrm_tmb),
+    "Model convergence problem: theta_vcov is not positive definite."
+  )
+})
+
+test_that("h_mmrm_tmb_check_conv warns if theta_vcov is not positive definite", {
+  tmb_opt <- list(
+    par = 1:5,
+    objective = 10,
+    convergence = 0,
+    message = NULL
+  )
+  not_positive_definite_matrix <- matrix(
+    c(
+      1, 2, 3, 4, 5,
+      2, 1, 4, 5, 6,
+      3, 4, 1, 6, 7,
+      4, 5, 6, 1, 8,
+      5, 6, 7, 8, -10
+    ),
+    nrow = 5,
+    byrow = TRUE
+  )
+  eigenvalues <- eigen(not_positive_definite_matrix)$values
+  assert_true(any(eigenvalues < 0))
+  mmrm_tmb <- structure(
+    list(theta_vcov = not_positive_definite_matrix),
+    class = "mmrm_tmb"
+  )
+  expect_warning(
+    h_mmrm_tmb_check_conv(tmb_opt, mmrm_tmb),
+    "Model convergence problem: theta_vcov is not positive definite."
+  )
+})
+
+test_that("h_mmrm_tmb_check_conv warns if theta_vcov is not symmetric", {
+  tmb_opt <- list(
+    par = 1:5,
+    objective = 10,
+    convergence = 0,
+    message = NULL
+  )
+  not_symmetric_matrix <- matrix(
+    c(
+      1,  1,  3,  4,  5,
+      2,  1,  4,  5,  6,
+      3,  4,  1,  6,  7,
+      4,  5,  6,  1,  8,
+      5,  6,  7,  8,  9
+    ),
+    nrow = 5,
+    byrow = TRUE
+  )
+  assert_false(all(not_symmetric_matrix == t(not_symmetric_matrix)))
+  mmrm_tmb <- structure(
+    list(theta_vcov = not_symmetric_matrix),
+    class = "mmrm_tmb"
+  )
+  expect_warning(
+    h_mmrm_tmb_check_conv(tmb_opt, mmrm_tmb),
+    "Model convergence problem: theta_vcov is not positive definite."
+  )
+})
+
+test_that("h_mmrm_tmb_check_conv warns if theta_vcov is numerically singular", {
+  tmb_opt <- list(
+    par = 1:5,
+    objective = 10,
+    convergence = 0,
+    message = NULL
+  )
+  singular_matrix <- matrix(
+    c(
+      1, 0.99, 0.98, 0.97, 0.96,
+      0.99, 1, 0.99, 0.98, 0.97,
+      0.98, 0.99, 1, 0.99, 0.98,
+      0.97, 0.98, 0.99, 1, 0.99,
+      0.96, 0.97, 0.98, 0.99, 1
+    ),
+    nrow = 5,
+    byrow = TRUE
+  )
+  # Slightly perturb the matrix to make it numerically singular
+  singular_matrix[5, ] <- singular_matrix[4, ] + 1e-10
+
+  assert_true(all(eigen(singular_matrix)$values > 0))
+  assert_true(qr(singular_matrix)$rank == 4)
+  mmrm_tmb <- structure(
+    list(theta_vcov = singular_matrix),
     class = "mmrm_tmb"
   )
   expect_warning(

@@ -32,7 +32,7 @@
   interval = c("none", "confidence", "prediction"),
   level = 0.95,
   nsim = 1000L,
-  conditional = TRUE,
+  conditional = FALSE,
   ...
 )
 
@@ -45,7 +45,7 @@
   ...
 )
 
-\method{model.matrix}{mmrm_tmb}(object, data, include = NULL, ...)
+\method{model.matrix}{mmrm_tmb}(object, data, use_response = TRUE, ...)
 
 \method{terms}{mmrm_tmb}(x, include = "response_var", ...)
 
@@ -108,6 +108,8 @@ Must be \code{NULL} or one or more of \code{c("subject_var", "visit_var", "group
 
 \item{na.action}{(\code{string})\cr na action.}
 
+\item{use_response}{(\code{flag})\cr whether to use the response for complete rows.}
+
 \item{x}{(\code{mmrm_tmb})\cr same as \code{object}.}
 
 \item{sigma}{cannot be used (this parameter does not exist in MMRM).}
@@ -130,7 +132,7 @@ If "marginal", the variance of the estimated covariance matrix is taken into acc
 Depends on the method, see Functions.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 }
 \details{
 \code{include} argument controls the variables the returned model frame will include.

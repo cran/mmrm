@@ -10,7 +10,7 @@ component(
     "beta_vcov", "beta_vcov_complete", "varcor", "formula", "dataset", "n_groups",
     "reml", "convergence", "evaluations", "method", "optimizer", "conv_message", "call",
     "theta_est", "beta_est", "beta_est_complete", "beta_aliased", "x_matrix", "y_vector",
-    "neg_log_lik", "jac_list", "theta_vcov", "full_frame")
+    "neg_log_lik", "jac_list", "theta_vcov", "full_frame", "xlev", "contrasts")
 )
 }
 \arguments{
@@ -22,7 +22,7 @@ component(
 The corresponding component of the object, see details.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#stable}{\figure{lifecycle-stable.svg}{options: alt='[Stable]'}}}{\strong{[Stable]}}
 }
 \details{
 Available \code{component()} names are as follows:
@@ -59,6 +59,8 @@ set to \code{NA}.
 or not.
 \item \code{theta_vcov}:  estimated variance-covariance matrix of variance parameters.
 \item \code{x_matrix}: design matrix used (excluding aliased columns).
+\item \code{xlev}: 	a named list of character vectors giving the full set of levels to be assumed for each factor.
+\item \code{contrasts}: a list of contrasts used for each factor.
 \item \code{y_vector}: response vector used.
 \item \code{jac_list}: Jacobian, see  \code{\link[=h_jac_list]{h_jac_list()}} for details.
 \item \code{full_frame}: \code{data.frame} with \code{n} rows containing all variables needed in the model.

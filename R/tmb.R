@@ -95,7 +95,9 @@ h_mmrm_tmb_data <- function(formula_parts,
                             singular = c("drop", "error", "keep"),
                             drop_visit_levels,
                             allow_na_response = FALSE,
-                            drop_levels = TRUE) {
+                            drop_levels = TRUE,
+                            xlev = NULL,
+                            contrasts = NULL) {
   assert_class(formula_parts, "mmrm_tmb_formula_parts")
   assert_data_frame(data)
   varname <- formula_parts[grepl("_var", names(formula_parts))]
@@ -145,30 +147,40 @@ h_mmrm_tmb_data <- function(formula_parts,
       formula_parts$full_formula,
       data = data,
       weights = .(as.symbol(weights_name)),
-      na.action = "na.pass"
+      na.action = "na.pass",
+      xlev = xlev
     ))
   )
   if (drop_levels) {
-    full_frame <- droplevels(full_frame, except = formula_parts$visit_var)
+    full_frame <- h_drop_levels(full_frame, formula_parts$subject_var, formula_parts$visit_var, names(xlev))
   }
-  keep_ind <- if (allow_na_response) {
-    # Note that response is always the first column.
+  has_response <- !identical(attr(attr(full_frame, "terms"), "response"), 0L)
+  keep_ind <- if (allow_na_response && has_response) {
+    # Note that response is always the first column if there is response.
     stats::complete.cases(full_frame[, -1L, drop = FALSE])
   } else {
     stats::complete.cases(full_frame)
   }
   full_frame <- full_frame[keep_ind, ]
-  if (drop_visit_levels && !formula_parts$is_spatial && is.factor(full_frame[[formula_parts$visit_var]])) {
-    old_levels <- levels(full_frame[[formula_parts$visit_var]])
-    full_frame[[formula_parts$visit_var]] <- droplevels(full_frame[[formula_parts$visit_var]])
+  if (drop_visit_levels && !formula_parts$is_spatial && h_extra_levels(full_frame[[formula_parts$visit_var]])) {
+    visit_vec <- full_frame[[formula_parts$visit_var]]
+    old_levels <- levels(visit_vec)
+    full_frame[[formula_parts$visit_var]] <- droplevels(visit_vec)
     new_levels <- levels(full_frame[[formula_parts$visit_var]])
     dropped <- setdiff(old_levels, new_levels)
-    if (length(dropped) > 0) {
-      message("In ", formula_parts$visit_var, " there are dropped visits: ", toString(dropped))
-    }
+    message(
+      "In ", formula_parts$visit_var, " there are dropped visits: ", toString(dropped),
+      ".\n Additional attributes including contrasts are lost.\n",
+      "To avoid this behavior, make sure use `drop_visit_levels = FALSE`."
+    )
   }
-
-  x_matrix <- stats::model.matrix(formula_parts$model_formula, data = full_frame)
+  is_factor_col <- vapply(full_frame, is.factor, FUN.VALUE = TRUE)
+  is_factor_col <- intersect(names(is_factor_col)[is_factor_col], all.vars(formula_parts$model_formula))
+  x_matrix <- stats::model.matrix(
+    formula_parts$model_formula,
+    data = full_frame,
+    contrasts.arg = h_default_value(contrasts, lapply(full_frame[is_factor_col], contrasts))
+  )
   x_cols_aliased <- stats::setNames(rep(FALSE, ncol(x_matrix)), nm = colnames(x_matrix))
   qr_x_mat <- qr(x_matrix)
   if (qr_x_mat$rank < ncol(x_matrix)) {
@@ -188,7 +200,11 @@ h_mmrm_tmb_data <- function(formula_parts,
       attr(x_matrix, "contrasts") <- contrasts_attr
     }
   }
-  y_vector <- as.numeric(stats::model.response(full_frame))
+  y_vector <- if (has_response) {
+    as.numeric(stats::model.response(full_frame))
+  } else {
+    rep(NA_real_, nrow(full_frame))
+  }
   weights_vector <- as.numeric(stats::model.weights(full_frame))
   n_subjects <- length(unique(full_frame[[formula_parts$subject_var]]))
   subject_zero_inds <- which(!duplicated(full_frame[[formula_parts$subject_var]])) - 1L
@@ -318,6 +334,12 @@ h_mmrm_tmb_check_conv <- function(tmb_opt, mmrm_tmb) {
     warning("Model convergence problem: theta_vcov contains non-finite values.")
     return()
   }
+  eigen_vals <- eigen(theta_vcov, only.values = TRUE)$values
+  if (mode(eigen_vals) == "complex" || any(eigen_vals <= 0)) {
+    # Note: complex eigen values signal that the matrix is not symmetric, therefore not positive definite.
+    warning("Model convergence problem: theta_vcov is not positive definite.")
+    return()
+  }
   qr_rank <- qr(theta_vcov)$rank
   if (qr_rank < ncol(theta_vcov)) {
     warning("Model convergence problem: theta_vcov is numerically singular.")
@@ -445,7 +467,7 @@ h_mmrm_tmb_fit <- function(tmb_object,
 
 #' Low-Level Fitting Function for MMRM
 #'
-#' @description `r lifecycle::badge("experimental")`
+#' @description `r lifecycle::badge("stable")`
 #'
 #' This is the low-level function to fit an MMRM. Note that this does not
 #' try different optimizers or adds Jacobian information etc. in contrast to
@@ -514,6 +536,8 @@ fit_mmrm <- function(formula,
     assert_class(formula_parts, "mmrm_tmb_formula_parts")
   }
   tmb_parameters <- h_mmrm_tmb_parameters(formula_parts, tmb_data, start = control$start, n_groups = tmb_data$n_groups)
+
+  h_tmb_warn_optimization()
 
   tmb_object <- TMB::MakeADFun(
     data = tmb_data,
