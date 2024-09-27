@@ -60,7 +60,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
 { counter-reset: source-line 0; }
@@ -457,17 +457,17 @@ degrees of freedom method gives as results:</p>
 <span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a><span class="co">#&gt; Coefficients: </span></span>
 <span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a><span class="co">#&gt;                                Estimate Std. Error        df t value Pr(&gt;|t|)</span></span>
-<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a><span class="co">#&gt; (Intercept)                    30.77741    0.88657 334.00000  34.715  &lt; 2e-16</span></span>
-<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a><span class="co">#&gt; RACEBlack or African American   1.53059    0.62446 192.00000   2.451 0.015138</span></span>
-<span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a><span class="co">#&gt; RACEWhite                       5.64357    0.66559 192.00000   8.479 5.97e-15</span></span>
-<span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a><span class="co">#&gt; SEXFemale                       0.32603    0.53194 192.00000   0.613 0.540663</span></span>
-<span id="cb1-27"><a href="#cb1-27" tabindex="-1"></a><span class="co">#&gt; ARMCDTRT                        3.77441    1.07416 192.00000   3.514 0.000551</span></span>
-<span id="cb1-28"><a href="#cb1-28" tabindex="-1"></a><span class="co">#&gt; AVISITVIS2                      4.83960    0.80173 334.00000   6.036 4.19e-09</span></span>
-<span id="cb1-29"><a href="#cb1-29" tabindex="-1"></a><span class="co">#&gt; AVISITVIS3                     10.34217    0.82269 334.00000  12.571  &lt; 2e-16</span></span>
-<span id="cb1-30"><a href="#cb1-30" tabindex="-1"></a><span class="co">#&gt; AVISITVIS4                     15.05379    1.31288 334.00000  11.466  &lt; 2e-16</span></span>
-<span id="cb1-31"><a href="#cb1-31" tabindex="-1"></a><span class="co">#&gt; ARMCDTRT:AVISITVIS2            -0.04209    1.12933 334.00000  -0.037 0.970292</span></span>
-<span id="cb1-32"><a href="#cb1-32" tabindex="-1"></a><span class="co">#&gt; ARMCDTRT:AVISITVIS3            -0.69381    1.18764 334.00000  -0.584 0.559486</span></span>
-<span id="cb1-33"><a href="#cb1-33" tabindex="-1"></a><span class="co">#&gt; ARMCDTRT:AVISITVIS4             0.62412    1.85096 334.00000   0.337 0.736186</span></span>
+<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a><span class="co">#&gt; (Intercept)                    30.77748    0.88656 334.00000  34.715  &lt; 2e-16</span></span>
+<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a><span class="co">#&gt; RACEBlack or African American   1.53050    0.62448 192.00000   2.451 0.015147</span></span>
+<span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a><span class="co">#&gt; RACEWhite                       5.64357    0.66561 192.00000   8.479 5.98e-15</span></span>
+<span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a><span class="co">#&gt; SEXFemale                       0.32606    0.53195 192.00000   0.613 0.540631</span></span>
+<span id="cb1-27"><a href="#cb1-27" tabindex="-1"></a><span class="co">#&gt; ARMCDTRT                        3.77423    1.07415 192.00000   3.514 0.000551</span></span>
+<span id="cb1-28"><a href="#cb1-28" tabindex="-1"></a><span class="co">#&gt; AVISITVIS2                      4.83959    0.80172 334.00000   6.037 4.19e-09</span></span>
+<span id="cb1-29"><a href="#cb1-29" tabindex="-1"></a><span class="co">#&gt; AVISITVIS3                     10.34211    0.82269 334.00000  12.571  &lt; 2e-16</span></span>
+<span id="cb1-30"><a href="#cb1-30" tabindex="-1"></a><span class="co">#&gt; AVISITVIS4                     15.05390    1.31281 334.00000  11.467  &lt; 2e-16</span></span>
+<span id="cb1-31"><a href="#cb1-31" tabindex="-1"></a><span class="co">#&gt; ARMCDTRT:AVISITVIS2            -0.04193    1.12932 334.00000  -0.037 0.970407</span></span>
+<span id="cb1-32"><a href="#cb1-32" tabindex="-1"></a><span class="co">#&gt; ARMCDTRT:AVISITVIS3            -0.69369    1.18765 334.00000  -0.584 0.559558</span></span>
+<span id="cb1-33"><a href="#cb1-33" tabindex="-1"></a><span class="co">#&gt; ARMCDTRT:AVISITVIS4             0.62423    1.85085 334.00000   0.337 0.736129</span></span>
 <span id="cb1-34"><a href="#cb1-34" tabindex="-1"></a><span class="co">#&gt;                                  </span></span>
 <span id="cb1-35"><a href="#cb1-35" tabindex="-1"></a><span class="co">#&gt; (Intercept)                   ***</span></span>
 <span id="cb1-36"><a href="#cb1-36" tabindex="-1"></a><span class="co">#&gt; RACEBlack or African American *  </span></span>
@@ -485,10 +485,10 @@ degrees of freedom method gives as results:</p>
 <span id="cb1-48"><a href="#cb1-48" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb1-49"><a href="#cb1-49" tabindex="-1"></a><span class="co">#&gt; Covariance estimate:</span></span>
 <span id="cb1-50"><a href="#cb1-50" tabindex="-1"></a><span class="co">#&gt;         VIS1    VIS2    VIS3    VIS4</span></span>
-<span id="cb1-51"><a href="#cb1-51" tabindex="-1"></a><span class="co">#&gt; VIS1 40.5544 14.3960  4.9760 13.3779</span></span>
-<span id="cb1-52"><a href="#cb1-52" tabindex="-1"></a><span class="co">#&gt; VIS2 14.3960 26.5714  2.7836  7.4773</span></span>
-<span id="cb1-53"><a href="#cb1-53" tabindex="-1"></a><span class="co">#&gt; VIS3  4.9760  2.7836 14.8980  0.9036</span></span>
-<span id="cb1-54"><a href="#cb1-54" tabindex="-1"></a><span class="co">#&gt; VIS4 13.3779  7.4773  0.9036 95.5565</span></span></code></pre></div>
+<span id="cb1-51"><a href="#cb1-51" tabindex="-1"></a><span class="co">#&gt; VIS1 40.5537 14.3960  4.9747 13.3867</span></span>
+<span id="cb1-52"><a href="#cb1-52" tabindex="-1"></a><span class="co">#&gt; VIS2 14.3960 26.5715  2.7855  7.4745</span></span>
+<span id="cb1-53"><a href="#cb1-53" tabindex="-1"></a><span class="co">#&gt; VIS3  4.9747  2.7855 14.8979  0.9082</span></span>
+<span id="cb1-54"><a href="#cb1-54" tabindex="-1"></a><span class="co">#&gt; VIS4 13.3867  7.4745  0.9082 95.5568</span></span></code></pre></div>
 <p>Let’s try to calculate the degrees of freedom manually now.</p>
 <p>In <code>fev_data</code> there are 197 subjects with at least one
 non-missing <code>FEV1</code> observation, and 537 non-missing
