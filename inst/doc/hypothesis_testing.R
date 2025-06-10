@@ -12,6 +12,6 @@ sub_mat <- solve(t(x1) %*% m %*% x1) %*% t(x1) %*% m %*% x2
 sub_mat
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  fit <- mmrm(FEV1 ~ ARMCD + AVISIT + ARMCD * AVISIT + ar1(AVISIT | USUBJID), data = fev_data)
-#  Anova(fit)
+# fit <- mmrm(FEV1 ~ ARMCD + AVISIT + ARMCD * AVISIT + ar1(AVISIT | USUBJID), data = fev_data)
+# Anova(fit)
 

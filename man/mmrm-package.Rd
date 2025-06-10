@@ -20,7 +20,7 @@ Useful links:
 
 Authors:
 \itemize{
-  \item Liming Li \email{liming.li@roche.com}
+  \item Liming Li \email{liming.li1@astrazeneca.com} (\href{https://orcid.org/0009-0008-6870-0878}{ORCID})
   \item Julia Dedic \email{julia.dedic@roche.com}
   \item Doug Kelkhoff \email{doug.kelkhoff@roche.com}
   \item Kevin Kunzmann \email{kevin.kunzmann@boehringer-ingelheim.com}
@@ -31,6 +31,7 @@ Authors:
   \item Jonathan Sidi \email{yoni@pinpointstrategies.io}
   \item Daniel Leibovitz \email{daniel.leibovitz@roche.com}
   \item Daniel D. Sjoberg \email{sjobergd@gene.com} (\href{https://orcid.org/0000-0003-0862-2018}{ORCID})
+  \item Nikolas Ivan Krieger \email{nikolas.krieger@experis.com} (\href{https://orcid.org/0000-0002-4581-3545}{ORCID})
 }
 
 Other contributors:

@@ -72,13 +72,13 @@ vapply(split(out$fev1, out$time), sd, FUN.VALUE = 1)
 mmrm(fev1 ~ trt * time + us(time | pts), data = out, start = emp_start)
 
 ## ----mmrm_using_std_start, eval = FALSE---------------------------------------
-#  mmrm(
-#    fev1 ~ trt * time + us(time | pts),
-#    data = out,
-#    start = std_start,
-#    optimizer = "nlminb",
-#    optimizer_control = list(eval.max = 1000, iter.max = 1000)
-#  )
+# mmrm(
+#   fev1 ~ trt * time + us(time | pts),
+#   data = out,
+#   start = std_start,
+#   optimizer = "nlminb",
+#   optimizer_control = list(eval.max = 1000, iter.max = 1000)
+# )
 
 ## ----common-changes-reml------------------------------------------------------
 fit_ml <- mmrm(
@@ -219,7 +219,7 @@ component(fit, name = c("convergence", "evaluations", "conv_message"))
 component(fit, name = "call")
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  component(fit)
+# component(fit)
 
 ## ----include = FALSE----------------------------------------------------------
 library(mmrm)

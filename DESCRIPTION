@@ -1,11 +1,11 @@
 Type: Package
 Package: mmrm
 Title: Mixed Models for Repeated Measures
-Version: 0.3.14
+Version: 0.3.15
 Authors@R: c(
     person("Daniel", "Sabanes Bove", , "daniel.sabanes_bove@rconis.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-0176-9239")),
-    person("Liming", "Li", , "liming.li@roche.com", role = "aut"),
+    person("Liming", "Li", , "liming.li1@astrazeneca.com", role = "aut", comment = c(ORCID = "0009-0008-6870-0878")),
     person("Julia", "Dedic", , "julia.dedic@roche.com", role = "aut"),
     person("Doug", "Kelkhoff", , "doug.kelkhoff@roche.com", role = "aut"),
     person("Kevin", "Kunzmann", , "kevin.kunzmann@boehringer-ingelheim.com", role = "aut"),
@@ -18,7 +18,9 @@ Authors@R: c(
     person("Daniel", "Leibovitz", , "daniel.leibovitz@roche.com", role = "aut"),
     person("Daniel D.", "Sjoberg", , "sjobergd@gene.com", role = "aut",
            comment = c(ORCID = "0000-0003-0862-2018")),
-    person("Lukas A.", "Widmer", , role = "ctb",
+    person("Nikolas Ivan", "Krieger", , "nikolas.krieger@experis.com", role = "aut",
+           comment = c(ORCID = "0000-0002-4581-3545")),
+    person("Lukas A.", "Widmer", role = "ctb",
            comment = c(ORCID = "0000-0003-1471-3493")),
     person("Boehringer Ingelheim Ltd.", role = c("cph", "fnd")),
     person("Gilead Sciences, Inc.", role = c("cph", "fnd")),
@@ -43,7 +45,7 @@ Description: Mixed models for repeated measures (MMRM) are a popular
 License: Apache License 2.0
 URL: https://openpharma.github.io/mmrm/
 BugReports: https://github.com/openpharma/mmrm/issues
-Depends: R (>= 4.0)
+Depends: R (>= 4.1)
 Imports: checkmate (>= 2.0), generics, lifecycle, Matrix, methods,
         nlme, parallel, Rcpp, Rdpack, stats, stringr, tibble, TMB (>=
         1.9.1), utils
@@ -68,10 +70,10 @@ Collate: 'between-within.R' 'catch-routine-registration.R'
         'residual.R' 'utils-nse.R' 'utils-formula.R' 'satterthwaite.R'
         'skipping.R' 'tidiers.R' 'testing.R' 'tmb-methods.R' 'tmb.R'
         'interop-emmeans.R' 'interop-parsnip.R' 'interop-car.R' 'zzz.R'
-Packaged: 2024-09-27 13:44:54 UTC; Daniel
-Author: Daniel Sabanes Bove [aut, cre]
-    (<https://orcid.org/0000-0002-0176-9239>),
-  Liming Li [aut],
+Packaged: 2025-06-10 09:46:41 UTC; Daniel
+Author: Daniel Sabanes Bove [aut, cre] (ORCID:
+    <https://orcid.org/0000-0002-0176-9239>),
+  Liming Li [aut] (ORCID: <https://orcid.org/0009-0008-6870-0878>),
   Julia Dedic [aut],
   Doug Kelkhoff [aut],
   Kevin Kunzmann [aut],
@@ -82,8 +84,11 @@ Author: Daniel Sabanes Bove [aut, cre]
   Dan James [aut],
   Jonathan Sidi [aut],
   Daniel Leibovitz [aut],
-  Daniel D. Sjoberg [aut] (<https://orcid.org/0000-0003-0862-2018>),
-  Lukas A. Widmer [ctb] (<https://orcid.org/0000-0003-1471-3493>),
+  Daniel D. Sjoberg [aut] (ORCID:
+    <https://orcid.org/0000-0003-0862-2018>),
+  Nikolas Ivan Krieger [aut] (ORCID:
+    <https://orcid.org/0000-0002-4581-3545>),
+  Lukas A. Widmer [ctb] (ORCID: <https://orcid.org/0000-0003-1471-3493>),
   Boehringer Ingelheim Ltd. [cph, fnd],
   Gilead Sciences, Inc. [cph, fnd],
   F. Hoffmann-La Roche AG [cph, fnd],
@@ -92,4 +97,4 @@ Author: Daniel Sabanes Bove [aut, cre]
   inferential.biostatistics GmbH [cph, fnd]
 Maintainer: Daniel Sabanes Bove <daniel.sabanes_bove@rconis.com>
 Repository: CRAN
-Date/Publication: 2024-09-27 23:30:01 UTC
+Date/Publication: 2025-06-10 10:50:02 UTC

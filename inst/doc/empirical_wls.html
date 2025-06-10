@@ -281,6 +281,8 @@ Freedom</a></li>
 Considerations in Implementations</a>
 <ul>
 <li><a href="#pseudo-inverse-of-a-matrix" id="toc-pseudo-inverse-of-a-matrix">Pseudo Inverse of a Matrix</a></li>
+<li><a href="#avoiding-the-crossproduct-of-the-g-matrix" id="toc-avoiding-the-crossproduct-of-the-g-matrix">Avoiding the
+Crossproduct of the G Matrix</a></li>
 </ul></li>
 <li><a href="#references" id="toc-references">References</a></li>
 </ul>
@@ -501,6 +503,19 @@ but it is not used for the following reason:</p>
 is still needed, so not using the method but instead calculating
 directly the square root of the pseudo inverse can be simpler.</li>
 </ol>
+</div>
+<div id="avoiding-the-crossproduct-of-the-g-matrix" class="section level2">
+<h2>Avoiding the Crossproduct of the G Matrix</h2>
+<p>In the implementation of the empirical covariance matrix with the
+Satterthwaite degrees of freedom calculation, it is important to avoid
+directly computing the crossproduct of the <span class="math inline">\(G\)</span> matrix (i.e., <span class="math inline">\(G^\top G\)</span>). This is because the <span class="math inline">\(G\)</span> matrix can have a large number of
+columns, in situations with many subjects and/or many coefficients,
+leading to significant computational and memory overhead. Instead, the
+current implementation leverages more efficient matrix operations when
+needed using the contrast matrix during the Satterthwaite degrees of
+freedom calculation. This approach ensures that the calculation remains
+feasible and efficient even for large datasets, without any numerical
+differences.</p>
 </div>
 </div>
 <div id="references" class="section level1 unnumbered">

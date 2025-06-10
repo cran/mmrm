@@ -48,8 +48,9 @@ overflow: visible;
 }
 </style>
 <style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -60,7 +61,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
 { counter-reset: source-line 0; }
@@ -1388,8 +1389,8 @@ least-square means by visit and by treatment arm:</p>
 <span id="cb39-22"><a href="#cb39-22" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb39-23"><a href="#cb39-23" tabindex="-1"></a><span class="co">#&gt; AVISIT = VIS4:</span></span>
 <span id="cb39-24"><a href="#cb39-24" tabindex="-1"></a><span class="co">#&gt;  ARMCD emmean    SE  df lower.CL upper.CL</span></span>
-<span id="cb39-25"><a href="#cb39-25" tabindex="-1"></a><span class="co">#&gt;  PBO     48.4 1.189 134     46.0     50.7</span></span>
-<span id="cb39-26"><a href="#cb39-26" tabindex="-1"></a><span class="co">#&gt;  TRT     52.8 1.188 133     50.4     55.1</span></span>
+<span id="cb39-25"><a href="#cb39-25" tabindex="-1"></a><span class="co">#&gt;  PBO     48.4 1.190 134     46.0     50.7</span></span>
+<span id="cb39-26"><a href="#cb39-26" tabindex="-1"></a><span class="co">#&gt;  TRT     52.8 1.190 133     50.4     55.1</span></span>
 <span id="cb39-27"><a href="#cb39-27" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb39-28"><a href="#cb39-28" tabindex="-1"></a><span class="co">#&gt; Results are averaged over the levels of: RACE, SEX </span></span>
 <span id="cb39-29"><a href="#cb39-29" tabindex="-1"></a><span class="co">#&gt; Confidence level used: 0.95</span></span></code></pre></div>
@@ -1401,7 +1402,7 @@ earlier:</p>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a><span class="fu">pairs</span>(lsmeans_by_visit, <span class="at">reverse =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb40-2"><a href="#cb40-2" tabindex="-1"></a><span class="co">#&gt; AVISIT = VIS1:</span></span>
 <span id="cb40-3"><a href="#cb40-3" tabindex="-1"></a><span class="co">#&gt;  contrast  estimate    SE  df t.ratio p.value</span></span>
-<span id="cb40-4"><a href="#cb40-4" tabindex="-1"></a><span class="co">#&gt;  TRT - PBO     3.77 1.074 146   3.514  0.0006</span></span>
+<span id="cb40-4"><a href="#cb40-4" tabindex="-1"></a><span class="co">#&gt;  TRT - PBO     3.77 1.070 146   3.514  0.0006</span></span>
 <span id="cb40-5"><a href="#cb40-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb40-6"><a href="#cb40-6" tabindex="-1"></a><span class="co">#&gt; AVISIT = VIS2:</span></span>
 <span id="cb40-7"><a href="#cb40-7" tabindex="-1"></a><span class="co">#&gt;  contrast  estimate    SE  df t.ratio p.value</span></span>
@@ -1413,7 +1414,7 @@ earlier:</p>
 <span id="cb40-13"><a href="#cb40-13" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb40-14"><a href="#cb40-14" tabindex="-1"></a><span class="co">#&gt; AVISIT = VIS4:</span></span>
 <span id="cb40-15"><a href="#cb40-15" tabindex="-1"></a><span class="co">#&gt;  contrast  estimate    SE  df t.ratio p.value</span></span>
-<span id="cb40-16"><a href="#cb40-16" tabindex="-1"></a><span class="co">#&gt;  TRT - PBO     4.40 1.681 133   2.617  0.0099</span></span>
+<span id="cb40-16"><a href="#cb40-16" tabindex="-1"></a><span class="co">#&gt;  TRT - PBO     4.40 1.680 133   2.617  0.0099</span></span>
 <span id="cb40-17"><a href="#cb40-17" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb40-18"><a href="#cb40-18" tabindex="-1"></a><span class="co">#&gt; Results are averaged over the levels of: RACE, SEX</span></span></code></pre></div>
 <p>(This is similar like the <code>pdiff</code> option in SAS
@@ -1428,7 +1429,7 @@ by <code>pairs()</code> .</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" tabindex="-1"></a><span class="fu">confint</span>(<span class="fu">pairs</span>(lsmeans_by_visit, <span class="at">reverse =</span> <span class="cn">TRUE</span>))</span>
 <span id="cb41-2"><a href="#cb41-2" tabindex="-1"></a><span class="co">#&gt; AVISIT = VIS1:</span></span>
 <span id="cb41-3"><a href="#cb41-3" tabindex="-1"></a><span class="co">#&gt;  contrast  estimate    SE  df lower.CL upper.CL</span></span>
-<span id="cb41-4"><a href="#cb41-4" tabindex="-1"></a><span class="co">#&gt;  TRT - PBO     3.77 1.074 146     1.65     5.90</span></span>
+<span id="cb41-4"><a href="#cb41-4" tabindex="-1"></a><span class="co">#&gt;  TRT - PBO     3.77 1.070 146     1.65     5.90</span></span>
 <span id="cb41-5"><a href="#cb41-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb41-6"><a href="#cb41-6" tabindex="-1"></a><span class="co">#&gt; AVISIT = VIS2:</span></span>
 <span id="cb41-7"><a href="#cb41-7" tabindex="-1"></a><span class="co">#&gt;  contrast  estimate    SE  df lower.CL upper.CL</span></span>
@@ -1440,7 +1441,7 @@ by <code>pairs()</code> .</p>
 <span id="cb41-13"><a href="#cb41-13" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb41-14"><a href="#cb41-14" tabindex="-1"></a><span class="co">#&gt; AVISIT = VIS4:</span></span>
 <span id="cb41-15"><a href="#cb41-15" tabindex="-1"></a><span class="co">#&gt;  contrast  estimate    SE  df lower.CL upper.CL</span></span>
-<span id="cb41-16"><a href="#cb41-16" tabindex="-1"></a><span class="co">#&gt;  TRT - PBO     4.40 1.681 133     1.07     7.72</span></span>
+<span id="cb41-16"><a href="#cb41-16" tabindex="-1"></a><span class="co">#&gt;  TRT - PBO     4.40 1.680 133     1.07     7.72</span></span>
 <span id="cb41-17"><a href="#cb41-17" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb41-18"><a href="#cb41-18" tabindex="-1"></a><span class="co">#&gt; Results are averaged over the levels of: RACE, SEX </span></span>
 <span id="cb41-19"><a href="#cb41-19" tabindex="-1"></a><span class="co">#&gt; Confidence level used: 0.95</span></span></code></pre></div>

@@ -315,7 +315,11 @@ X)^{-1}
 <p>Where <span class="math inline">\(W_i\)</span> is the block diagonal
 part for subject <span class="math inline">\(i\)</span> of <span class="math inline">\(W\)</span> matrix, <span class="math inline">\(\hat\epsilon_i\)</span> is the observed residuals
 for subject i, <span class="math inline">\(L_i\)</span> is the Cholesky
-factor of <span class="math inline">\(\Sigma_i^{-1}\)</span> (<span class="math inline">\(W_i = L_i L_i^\top\)</span>).</p>
+factor of <span class="math inline">\(\Sigma_i^{-1}\)</span> (<span class="math inline">\(W_i = L_i L_i^\top\)</span>). In the sandwich, the
+score <span class="math inline">\(X_i^\top W_i \hat\epsilon_i\)</span>
+computed for subject <span class="math inline">\(i\)</span> can be
+accessed by
+<code>component(mmrm_obj, name = &quot;score_per_subject&quot;)</code>.</p>
 <p>See the detailed explanation of these formulas in the <a href="empirical_wls.html">Weighted Least Square Empirical Covariance</a>
 vignette.</p>
 </div>
