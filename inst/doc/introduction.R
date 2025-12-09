@@ -281,7 +281,7 @@ library(car)
 Anova(fit, type = "II")
 
 ## ----car_type3----------------------------------------------------------------
-Anova(fit, type = "III")
+Anova(fit, type = "III", test.statistic = "Chisq")
 
 ## ----include = FALSE----------------------------------------------------------
 library(mmrm)

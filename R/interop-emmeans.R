@@ -26,16 +26,19 @@ NULL
 #' @seealso See [emmeans::recover_data()] for background.
 #' @keywords internal
 #' @noRd
-recover_data.mmrm <- function(object, ...) { # nolint
+# nolint start
+recover_data.mmrm <- function(object, ...) {
+  # nolint end
   fun_call <- stats::getCall(object)
   # subject_var is excluded because it should not contain fixed effect.
-  # visit_var is not excluded because emmeans can provide marginal mean
-  # by each visit if visit_var is not spatial.
+  # visit_var is only excluded for spatial covariance structures -
+  # for non-spatial covariance structures, emmeans can provide marginal mean
+  # by each visit so we need visit_var.
   model_frame <- stats::model.frame(
     object,
-    include = c(
-      if (!object$formula_parts$is_spatial) "visit_var" else NULL,
-      "response_var", "group_var"
+    exclude = c(
+      "subject_var",
+      if (object$formula_parts$is_spatial) "visit_var"
     )
   )
   model_terms <- stats::delete.response(stats::terms(model_frame))
@@ -53,12 +56,21 @@ recover_data.mmrm <- function(object, ...) { # nolint
 #' @seealso See [emmeans::emm_basis()] for background.
 #' @keywords internal
 #' @noRd
-emm_basis.mmrm <- function(object, # nolint
-                           trms,
-                           xlev,
-                           grid,
-                           ...) {
-  model_frame <- stats::model.frame(trms, grid, na.action = stats::na.pass, xlev = xlev)
+# nolint start
+emm_basis.mmrm <- function(
+  # nolint end
+  object,
+  trms,
+  xlev,
+  grid,
+  ...
+) {
+  model_frame <- stats::model.frame(
+    trms,
+    grid,
+    na.action = stats::na.pass,
+    xlev = xlev
+  )
   contrasts <- component(object, "contrasts")
   model_mat <- stats::model.matrix(trms, model_frame, contrasts.arg = contrasts)
   beta_hat <- component(object, "beta_est")
@@ -70,9 +82,9 @@ emm_basis.mmrm <- function(object, # nolint
       trms,
       stats::model.frame(
         object,
-        include = c(
-          if (!object$formula_parts$is_spatial) "visit_var" else NULL,
-          "response_var", "group_var"
+        exclude = c(
+          "subject_var",
+          if (object$formula_parts$is_spatial) "visit_var"
         )
       ),
       contrasts.arg = contrasts

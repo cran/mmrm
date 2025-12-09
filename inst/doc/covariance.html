@@ -353,9 +353,9 @@ structure instead.</p>
 </div>
 <div id="transformation-to-variance-parameters" class="section level2">
 <h2>Transformation to Variance Parameters</h2>
-<p>For standard deviation parameters <span class="math inline">\(\sigma\)</span> we use the natural logarithm <span class="math inline">\(\log(\sigma)\)</span> to map them to <span class="math inline">\(\mathbb{R}\)</span>. For correlation parameters
-<span class="math inline">\(\rho\)</span> we consistently use the
-transformation <span class="math display">\[
+<p>For standard deviation parameters <span class="math inline">\(\sigma\)</span> we use the natural logarithm <span class="math inline">\(\log(\sigma)\)</span> to map them to <span class="math inline">\(\mathbb{R}\)</span>.</p>
+<p>For correlation parameters <span class="math inline">\(\rho\)</span>
+we mostly use the transformation <span class="math display">\[
 \theta = f(\rho) = \mathop{\mathrm{sign}}(\rho) \sqrt{\frac{\rho^2}{1 -
 \rho^2}}
 \]</span> which maps the correlation parameter to <span class="math inline">\(\theta \in \mathbb{R}\)</span>. It has the inverse
@@ -363,7 +363,9 @@ transformation <span class="math display">\[
 \rho = f^{-1}(\theta) = \frac{\theta}{\sqrt{1 + \theta^2}}.
 \]</span> This is important because the resulting variance parameters
 <span class="math inline">\(\theta\)</span> can be optimized without
-constraints over the whole of <span class="math inline">\(\mathbb{R}\)</span>.</p>
+constraints over the whole of <span class="math inline">\(\mathbb{R}\)</span>. We use different
+transformations for the compound symmetry and spatial exponential
+covariance structures, as explained below.</p>
 </div>
 </div>
 <div id="covariance-structures" class="section level1">
@@ -461,6 +463,15 @@ correlation between different time points: <span class="math display">\[
 \rho_{ij} = \rho
 \]</span> where <span class="math inline">\(\rho\)</span> is the single
 correlation parameter here.</p>
+<p>The permitted range of <span class="math inline">\(\rho\)</span> is
+only from <span class="math inline">\(-1/(m-1)\)</span> to <span class="math inline">\(1\)</span>, therefore we use here a different
+transformation: With the negative lower bound for the correlation
+defined as <span class="math inline">\(a=1/(m-1)\)</span>, we use <span class="math display">\[
+\theta = f(\rho) = \mathop{\mathrm{logit}}((\rho + a) / (1 + a))
+\]</span> with the inverse <span class="math display">\[
+\rho = f^{-1}(\theta) = \mathop{\mathrm{logit}}^{-1}(\theta) (1 + a) -
+a.
+\]</span></p>
 <p>Assuming a constant variance in the state-space equation yields a
 homogeneous compound symmetry covariance structure with total only <span class="math inline">\(k=2\)</span> variance parameters, otherwise we
 obtain the heterogeneous compound symmetry covariance structure with
@@ -502,9 +513,9 @@ between time point <span class="math inline">\(i\)</span> and time point
 is a little different from previous examples. In previous examples,
 <span class="math inline">\(\rho\)</span> can take values from -1 to 1,
 but here we need to restrict <span class="math inline">\(\rho\)</span>
-to (0, 1). Hence we have the following parametrization form.</p>
+to (0, 1). Hence we have the following parametrization form:</p>
 <p><span class="math display">\[
-  \theta = (\log(\sigma), \mathop{\mathrm{logit}}(\rho))
+\theta = (\log(\sigma), \mathop{\mathrm{logit}}(\rho))
 \]</span></p>
 </div>
 </div>

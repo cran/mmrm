@@ -385,7 +385,11 @@ contrasts</a></li>
 <li><a href="#support-for-emmeans" id="toc-support-for-emmeans">Support
 for emmeans</a></li>
 <li><a href="#support-for-car" id="toc-support-for-car">Support for
-car</a></li>
+car</a>
+<ul>
+<li><a href="#mathematical-basis" id="toc-mathematical-basis">Mathematical basis</a></li>
+<li><a href="#examples" id="toc-examples">Examples</a></li>
+</ul></li>
 </ul></li>
 <li><a href="#tidymodels" id="toc-tidymodels">Tidymodels</a>
 <ul>
@@ -739,9 +743,9 @@ function call for homogeneous compound symmetry (<code>cs</code>).</p>
 <span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb11-16"><a href="#cb11-16" tabindex="-1"></a><span class="co">#&gt; Coefficients: </span></span>
 <span id="cb11-17"><a href="#cb11-17" tabindex="-1"></a><span class="co">#&gt;                   (Intercept) RACEBlack or African American </span></span>
-<span id="cb11-18"><a href="#cb11-18" tabindex="-1"></a><span class="co">#&gt;                    31.4207077                     0.5357237 </span></span>
+<span id="cb11-18"><a href="#cb11-18" tabindex="-1"></a><span class="co">#&gt;                    31.4207078                     0.5357236 </span></span>
 <span id="cb11-19"><a href="#cb11-19" tabindex="-1"></a><span class="co">#&gt;                     RACEWhite                      ARMCDTRT </span></span>
-<span id="cb11-20"><a href="#cb11-20" tabindex="-1"></a><span class="co">#&gt;                     5.4546329                     3.4305212 </span></span>
+<span id="cb11-20"><a href="#cb11-20" tabindex="-1"></a><span class="co">#&gt;                     5.4546329                     3.4305211 </span></span>
 <span id="cb11-21"><a href="#cb11-21" tabindex="-1"></a><span class="co">#&gt;                    AVISITVIS2                    AVISITVIS3 </span></span>
 <span id="cb11-22"><a href="#cb11-22" tabindex="-1"></a><span class="co">#&gt;                     4.8326353                    10.2395076 </span></span>
 <span id="cb11-23"><a href="#cb11-23" tabindex="-1"></a><span class="co">#&gt;                    AVISITVIS4           ARMCDTRT:AVISITVIS2 </span></span>
@@ -811,17 +815,17 @@ variable.</p>
 <span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a><span class="fu">VarCorr</span>(fit_cs)</span>
 <span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a><span class="co">#&gt; $PBO</span></span>
 <span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a><span class="co">#&gt;           VIS1      VIS2      VIS3      VIS4</span></span>
-<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a><span class="co">#&gt; VIS1 37.823638  3.601296  3.601296  3.601296</span></span>
-<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a><span class="co">#&gt; VIS2  3.601296 37.823638  3.601296  3.601296</span></span>
-<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a><span class="co">#&gt; VIS3  3.601296  3.601296 37.823638  3.601296</span></span>
-<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a><span class="co">#&gt; VIS4  3.601296  3.601296  3.601296 37.823638</span></span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a><span class="co">#&gt; VIS1 37.822313  3.600996  3.600996  3.600996</span></span>
+<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a><span class="co">#&gt; VIS2  3.600996 37.822313  3.600996  3.600996</span></span>
+<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a><span class="co">#&gt; VIS3  3.600996  3.600996 37.822313  3.600996</span></span>
+<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a><span class="co">#&gt; VIS4  3.600996  3.600996  3.600996 37.822313</span></span>
 <span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb13-14"><a href="#cb13-14" tabindex="-1"></a><span class="co">#&gt; $TRT</span></span>
 <span id="cb13-15"><a href="#cb13-15" tabindex="-1"></a><span class="co">#&gt;          VIS1     VIS2     VIS3     VIS4</span></span>
-<span id="cb13-16"><a href="#cb13-16" tabindex="-1"></a><span class="co">#&gt; VIS1 49.58110 10.98112 10.98112 10.98112</span></span>
-<span id="cb13-17"><a href="#cb13-17" tabindex="-1"></a><span class="co">#&gt; VIS2 10.98112 49.58110 10.98112 10.98112</span></span>
-<span id="cb13-18"><a href="#cb13-18" tabindex="-1"></a><span class="co">#&gt; VIS3 10.98112 10.98112 49.58110 10.98112</span></span>
-<span id="cb13-19"><a href="#cb13-19" tabindex="-1"></a><span class="co">#&gt; VIS4 10.98112 10.98112 10.98112 49.58110</span></span></code></pre></div>
+<span id="cb13-16"><a href="#cb13-16" tabindex="-1"></a><span class="co">#&gt; VIS1 49.58031 10.98097 10.98097 10.98097</span></span>
+<span id="cb13-17"><a href="#cb13-17" tabindex="-1"></a><span class="co">#&gt; VIS2 10.98097 49.58031 10.98097 10.98097</span></span>
+<span id="cb13-18"><a href="#cb13-18" tabindex="-1"></a><span class="co">#&gt; VIS3 10.98097 10.98097 49.58031 10.98097</span></span>
+<span id="cb13-19"><a href="#cb13-19" tabindex="-1"></a><span class="co">#&gt; VIS4 10.98097 10.98097 10.98097 49.58031</span></span></code></pre></div>
 <p>We can see that the estimated covariance matrices are different in
 different <code>ARMCD</code> groups.</p>
 </div>
@@ -1062,7 +1066,7 @@ is as follows:</p>
 <span id="cb22-25"><a href="#cb22-25" tabindex="-1"></a><span class="co">#&gt;  $ aic_list        :List of 4</span></span>
 <span id="cb22-26"><a href="#cb22-26" tabindex="-1"></a><span class="co">#&gt;   ..$ AIC     : num 3407</span></span>
 <span id="cb22-27"><a href="#cb22-27" tabindex="-1"></a><span class="co">#&gt;   ..$ BIC     : num 3440</span></span>
-<span id="cb22-28"><a href="#cb22-28" tabindex="-1"></a><span class="co">#&gt;   ..$ logLik  : num -1694</span></span>
+<span id="cb22-28"><a href="#cb22-28" tabindex="-1"></a><span class="co">#&gt;   ..$ logLik  :Class &#39;logLik&#39; : -1694 (df=10)</span></span>
 <span id="cb22-29"><a href="#cb22-29" tabindex="-1"></a><span class="co">#&gt;   ..$ deviance: num 3387</span></span>
 <span id="cb22-30"><a href="#cb22-30" tabindex="-1"></a><span class="co">#&gt;  $ call            : language mmrm(formula = FEV1 ~ RACE + ARMCD * AVISIT + us(AVISIT | USUBJID), data = fev_data)</span></span>
 <span id="cb22-31"><a href="#cb22-31" tabindex="-1"></a><span class="co">#&gt;  - attr(*, &quot;class&quot;)= chr &quot;summary.mmrm&quot;</span></span></code></pre></div>
@@ -1144,9 +1148,9 @@ table of goodness of fit statistics:</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
 <span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a>  <span class="fu">glance</span>()</span>
 <span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 4</span></span>
-<span id="cb28-4"><a href="#cb28-4" tabindex="-1"></a><span class="co">#&gt;     AIC   BIC logLik deviance</span></span>
-<span id="cb28-5"><a href="#cb28-5" tabindex="-1"></a><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;</span></span>
-<span id="cb28-6"><a href="#cb28-6" tabindex="-1"></a><span class="co">#&gt; 1 3407. 3440. -1694.    3387.</span></span></code></pre></div>
+<span id="cb28-4"><a href="#cb28-4" tabindex="-1"></a><span class="co">#&gt;     AIC   BIC logLik    deviance</span></span>
+<span id="cb28-5"><a href="#cb28-5" tabindex="-1"></a><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;logLik&gt;     &lt;dbl&gt;</span></span>
+<span id="cb28-6"><a href="#cb28-6" tabindex="-1"></a><span class="co">#&gt; 1 3407. 3440. -1693.687    3387.</span></span></code></pre></div>
 <p>Finally, we can use the <code>augment</code> method to return a
 merged <code>tibble</code> of the data, fitted values and residuals:</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a>fit <span class="sc">|&gt;</span></span>
@@ -1449,38 +1453,66 @@ by <code>pairs()</code> .</p>
 <div id="support-for-car" class="section level2">
 <h2>Support for car</h2>
 <p>This package includes methods that allow <code>mmrm</code> objects to
-be used with the <code>car::Anova</code> function. <code>Anova</code>
-conducts type II/III hypothesis testing for the effect in
-<code>mmrm</code> models. For example, in order to see if the used
-covariates are related to the response:</p>
+be used with <code>car::Anova()</code>. This function conducts type
+II/III hypothesis testing for the effects in <code>mmrm</code> models,
+using either F-tests (default) or Chi-squared tests.</p>
+<div id="mathematical-basis" class="section level3">
+<h3>Mathematical basis</h3>
+<p>For each effect, the Chi-squared test statistic is calculated using:
+<span class="math display">\[
+\chi^2=[\mathbf{L}\cdot b]^T\cdot
+[\mathbf{L}\cdot\mathbf{V}\cdot\mathbf{L}^T]^{-1}\cdot\mathbf{L}\cdot b
+\]</span> where <span class="math inline">\(\mathbf{L}\)</span> is the
+desired contrast matrix, <span class="math inline">\(b\)</span> is a
+one-column matrix containing the coefficients of the non-aliased terms
+in the model, and <span class="math inline">\(\mathbf{V}\)</span> is the
+variance-covariance matrix of the coefficients.</p>
+<p>The F-test statistic is calculated by dividing the Chi-squared test
+statistic by the numerator degrees of freedom <span class="math inline">\(\text{df}_\text{num}\)</span>, which is equal to
+the number of parameters associated with the effect and therefore the
+number of rows in the contrast matrix <span class="math inline">\(\mathbf{L}\)</span>. It is also multiplied by a
+scaling factor <span class="math inline">\(\lambda\)</span> (e.g., when
+utilizing the adjusted Kenward-Roger degrees of freedom), which can be
+set to 1 if not needed:</p>
+<p><span class="math display">\[
+F = \lambda\frac{\chi^2}{\text{df}_\text{num}}
+\]</span></p>
+</div>
+<div id="examples" class="section level3">
+<h3>Examples</h3>
+<p>In order to see if the used covariates are related to the response
+using a type II test:</p>
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" tabindex="-1"></a><span class="fu">library</span>(car)</span>
 <span id="cb42-2"><a href="#cb42-2" tabindex="-1"></a><span class="co">#&gt; Loading required package: carData</span></span>
 <span id="cb42-3"><a href="#cb42-3" tabindex="-1"></a><span class="co">#&gt; mmrm() registered as car::Anova extension</span></span>
 <span id="cb42-4"><a href="#cb42-4" tabindex="-1"></a><span class="fu">Anova</span>(fit, <span class="at">type =</span> <span class="st">&quot;II&quot;</span>)</span>
 <span id="cb42-5"><a href="#cb42-5" tabindex="-1"></a><span class="co">#&gt; Analysis of Fixed Effect Table (Type II F tests)</span></span>
-<span id="cb42-6"><a href="#cb42-6" tabindex="-1"></a><span class="co">#&gt;              Num Df Denom Df F Statistic   Pr(&gt;=F)    </span></span>
-<span id="cb42-7"><a href="#cb42-7" tabindex="-1"></a><span class="co">#&gt; RACE              2   165.56      36.911 5.545e-14 ***</span></span>
-<span id="cb42-8"><a href="#cb42-8" tabindex="-1"></a><span class="co">#&gt; SEX               1   166.13       0.376    0.5407    </span></span>
-<span id="cb42-9"><a href="#cb42-9" tabindex="-1"></a><span class="co">#&gt; ARMCD             1   169.12      31.421 8.296e-08 ***</span></span>
-<span id="cb42-10"><a href="#cb42-10" tabindex="-1"></a><span class="co">#&gt; AVISIT            3   148.65     142.822 &lt; 2.2e-16 ***</span></span>
-<span id="cb42-11"><a href="#cb42-11" tabindex="-1"></a><span class="co">#&gt; ARMCD:AVISIT      3   147.91       0.258    0.8555    </span></span>
+<span id="cb42-6"><a href="#cb42-6" tabindex="-1"></a><span class="co">#&gt;              Df Res.Df        F    Pr(&gt;F)    </span></span>
+<span id="cb42-7"><a href="#cb42-7" tabindex="-1"></a><span class="co">#&gt; RACE          2 165.56  36.9114 5.545e-14 ***</span></span>
+<span id="cb42-8"><a href="#cb42-8" tabindex="-1"></a><span class="co">#&gt; SEX           1 166.13   0.3757    0.5407    </span></span>
+<span id="cb42-9"><a href="#cb42-9" tabindex="-1"></a><span class="co">#&gt; ARMCD         1 169.12  31.4209 8.296e-08 ***</span></span>
+<span id="cb42-10"><a href="#cb42-10" tabindex="-1"></a><span class="co">#&gt; AVISIT        3 148.65 142.8221 &lt; 2.2e-16 ***</span></span>
+<span id="cb42-11"><a href="#cb42-11" tabindex="-1"></a><span class="co">#&gt; ARMCD:AVISIT  3 147.91   0.2581    0.8555    </span></span>
 <span id="cb42-12"><a href="#cb42-12" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
 <span id="cb42-13"><a href="#cb42-13" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span></code></pre></div>
-<p>Note that the degrees of freedom choice is inherited here from the
-initial <code>mmrm</code> fit. In addition, please note that if you see
-results that are slightly different from SAS, it could be because the
-reference level is set differently for categorical covariates. We can
-also use type III hypothesis testing:</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" tabindex="-1"></a><span class="fu">Anova</span>(fit, <span class="at">type =</span> <span class="st">&quot;III&quot;</span>)</span>
-<span id="cb43-2"><a href="#cb43-2" tabindex="-1"></a><span class="co">#&gt; Analysis of Fixed Effect Table (Type III F tests)</span></span>
-<span id="cb43-3"><a href="#cb43-3" tabindex="-1"></a><span class="co">#&gt;              Num Df Denom Df F Statistic   Pr(&gt;=F)    </span></span>
-<span id="cb43-4"><a href="#cb43-4" tabindex="-1"></a><span class="co">#&gt; RACE              2   165.56      36.911 5.545e-14 ***</span></span>
-<span id="cb43-5"><a href="#cb43-5" tabindex="-1"></a><span class="co">#&gt; SEX               1   166.13       0.376    0.5407    </span></span>
-<span id="cb43-6"><a href="#cb43-6" tabindex="-1"></a><span class="co">#&gt; ARMCD             1   168.52      31.663 7.502e-08 ***</span></span>
-<span id="cb43-7"><a href="#cb43-7" tabindex="-1"></a><span class="co">#&gt; AVISIT            3   148.12     142.112 &lt; 2.2e-16 ***</span></span>
-<span id="cb43-8"><a href="#cb43-8" tabindex="-1"></a><span class="co">#&gt; ARMCD:AVISIT      3   147.91       0.258    0.8555    </span></span>
+<p>Note that for the F-test, the denominator degrees of freedom choice
+is inherited here from the initial <code>mmrm</code> fit. In addition,
+please note that if you see results that are slightly different from
+SAS, it could be because the reference level is set differently for
+categorical covariates.</p>
+<p>We can also use type III hypothesis testing, this time choosing a
+Chi-squared test statistic:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" tabindex="-1"></a><span class="fu">Anova</span>(fit, <span class="at">type =</span> <span class="st">&quot;III&quot;</span>, <span class="at">test.statistic =</span> <span class="st">&quot;Chisq&quot;</span>)</span>
+<span id="cb43-2"><a href="#cb43-2" tabindex="-1"></a><span class="co">#&gt; Analysis of Fixed Effect Table (Type III Chisq tests)</span></span>
+<span id="cb43-3"><a href="#cb43-3" tabindex="-1"></a><span class="co">#&gt;              Df    Chisq Pr(&gt;Chisq)    </span></span>
+<span id="cb43-4"><a href="#cb43-4" tabindex="-1"></a><span class="co">#&gt; RACE          2  73.8229  &lt; 2.2e-16 ***</span></span>
+<span id="cb43-5"><a href="#cb43-5" tabindex="-1"></a><span class="co">#&gt; SEX           1   0.3757     0.5399    </span></span>
+<span id="cb43-6"><a href="#cb43-6" tabindex="-1"></a><span class="co">#&gt; ARMCD         1  31.6631  1.834e-08 ***</span></span>
+<span id="cb43-7"><a href="#cb43-7" tabindex="-1"></a><span class="co">#&gt; AVISIT        3 426.3367  &lt; 2.2e-16 ***</span></span>
+<span id="cb43-8"><a href="#cb43-8" tabindex="-1"></a><span class="co">#&gt; ARMCD:AVISIT  3   0.7742     0.8556    </span></span>
 <span id="cb43-9"><a href="#cb43-9" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
 <span id="cb43-10"><a href="#cb43-10" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</span></span></code></pre></div>
+</div>
 </div>
 </div>
 <div id="tidymodels" class="section level1">
@@ -2467,22 +2499,26 @@ the transformed data that will be used in the model fit looks like.</p>
 <div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" tabindex="-1"></a>mmrm_recipe <span class="sc">|&gt;</span></span>
 <span id="cb52-2"><a href="#cb52-2" tabindex="-1"></a>  <span class="fu">prep</span>() <span class="sc">|&gt;</span></span>
 <span id="cb52-3"><a href="#cb52-3" tabindex="-1"></a>  <span class="fu">juice</span>()</span>
-<span id="cb52-4"><a href="#cb52-4" tabindex="-1"></a><span class="co">#&gt; # A tibble: 800 × 13</span></span>
-<span id="cb52-5"><a href="#cb52-5" tabindex="-1"></a><span class="co">#&gt;    USUBJID AVISIT RACE       SEX   FEV1_BL WEIGHT VISITN VISITN2  FEV1 ARMCD_TRT</span></span>
-<span id="cb52-6"><a href="#cb52-6" tabindex="-1"></a><span class="co">#&gt;    &lt;fct&gt;   &lt;fct&gt;  &lt;fct&gt;      &lt;fct&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;int&gt;   &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;</span></span>
-<span id="cb52-7"><a href="#cb52-7" tabindex="-1"></a><span class="co">#&gt;  1 PT1     VIS1   Black or … Fema…    25.3  0.677      1  -0.626  NA           1</span></span>
-<span id="cb52-8"><a href="#cb52-8" tabindex="-1"></a><span class="co">#&gt;  2 PT1     VIS2   Black or … Fema…    25.3  0.801      2   0.184  40.0         1</span></span>
-<span id="cb52-9"><a href="#cb52-9" tabindex="-1"></a><span class="co">#&gt;  3 PT1     VIS3   Black or … Fema…    25.3  0.709      3  -0.836  NA           1</span></span>
-<span id="cb52-10"><a href="#cb52-10" tabindex="-1"></a><span class="co">#&gt;  4 PT1     VIS4   Black or … Fema…    25.3  0.809      4   1.60   20.5         1</span></span>
-<span id="cb52-11"><a href="#cb52-11" tabindex="-1"></a><span class="co">#&gt;  5 PT2     VIS1   Asian      Male     45.0  0.465      1   0.330  NA           0</span></span>
-<span id="cb52-12"><a href="#cb52-12" tabindex="-1"></a><span class="co">#&gt;  6 PT2     VIS2   Asian      Male     45.0  0.233      2  -0.820  31.5         0</span></span>
-<span id="cb52-13"><a href="#cb52-13" tabindex="-1"></a><span class="co">#&gt;  7 PT2     VIS3   Asian      Male     45.0  0.360      3   0.487  36.9         0</span></span>
-<span id="cb52-14"><a href="#cb52-14" tabindex="-1"></a><span class="co">#&gt;  8 PT2     VIS4   Asian      Male     45.0  0.507      4   0.738  48.8         0</span></span>
-<span id="cb52-15"><a href="#cb52-15" tabindex="-1"></a><span class="co">#&gt;  9 PT3     VIS1   Black or … Fema…    43.5  0.682      1   0.576  NA           0</span></span>
-<span id="cb52-16"><a href="#cb52-16" tabindex="-1"></a><span class="co">#&gt; 10 PT3     VIS2   Black or … Fema…    43.5  0.892      2  -0.305  36.0         0</span></span>
-<span id="cb52-17"><a href="#cb52-17" tabindex="-1"></a><span class="co">#&gt; # ℹ 790 more rows</span></span>
-<span id="cb52-18"><a href="#cb52-18" tabindex="-1"></a><span class="co">#&gt; # ℹ 3 more variables: ARMCD_TRT_x_AVISITVIS2 &lt;dbl&gt;,</span></span>
-<span id="cb52-19"><a href="#cb52-19" tabindex="-1"></a><span class="co">#&gt; #   ARMCD_TRT_x_AVISITVIS3 &lt;dbl&gt;, ARMCD_TRT_x_AVISITVIS4 &lt;dbl&gt;</span></span></code></pre></div>
+<span id="cb52-4"><a href="#cb52-4" tabindex="-1"></a><span class="co">#&gt; Warning: Categorical variables used in `step_interact()` should probably be avoided;</span></span>
+<span id="cb52-5"><a href="#cb52-5" tabindex="-1"></a><span class="co">#&gt; This can lead to differences in dummy variable values that are produced by</span></span>
+<span id="cb52-6"><a href="#cb52-6" tabindex="-1"></a><span class="co">#&gt; ?step_dummy (`?recipes::step_dummy()`). Please convert all involved variables</span></span>
+<span id="cb52-7"><a href="#cb52-7" tabindex="-1"></a><span class="co">#&gt; to dummy variables first.</span></span>
+<span id="cb52-8"><a href="#cb52-8" tabindex="-1"></a><span class="co">#&gt; # A tibble: 800 × 13</span></span>
+<span id="cb52-9"><a href="#cb52-9" tabindex="-1"></a><span class="co">#&gt;    USUBJID AVISIT RACE       SEX   FEV1_BL WEIGHT VISITN VISITN2  FEV1 ARMCD_TRT</span></span>
+<span id="cb52-10"><a href="#cb52-10" tabindex="-1"></a><span class="co">#&gt;    &lt;fct&gt;   &lt;fct&gt;  &lt;fct&gt;      &lt;fct&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;int&gt;   &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;</span></span>
+<span id="cb52-11"><a href="#cb52-11" tabindex="-1"></a><span class="co">#&gt;  1 PT1     VIS1   Black or … Fema…    25.3  0.677      1  -0.626  NA           1</span></span>
+<span id="cb52-12"><a href="#cb52-12" tabindex="-1"></a><span class="co">#&gt;  2 PT1     VIS2   Black or … Fema…    25.3  0.801      2   0.184  40.0         1</span></span>
+<span id="cb52-13"><a href="#cb52-13" tabindex="-1"></a><span class="co">#&gt;  3 PT1     VIS3   Black or … Fema…    25.3  0.709      3  -0.836  NA           1</span></span>
+<span id="cb52-14"><a href="#cb52-14" tabindex="-1"></a><span class="co">#&gt;  4 PT1     VIS4   Black or … Fema…    25.3  0.809      4   1.60   20.5         1</span></span>
+<span id="cb52-15"><a href="#cb52-15" tabindex="-1"></a><span class="co">#&gt;  5 PT2     VIS1   Asian      Male     45.0  0.465      1   0.330  NA           0</span></span>
+<span id="cb52-16"><a href="#cb52-16" tabindex="-1"></a><span class="co">#&gt;  6 PT2     VIS2   Asian      Male     45.0  0.233      2  -0.820  31.5         0</span></span>
+<span id="cb52-17"><a href="#cb52-17" tabindex="-1"></a><span class="co">#&gt;  7 PT2     VIS3   Asian      Male     45.0  0.360      3   0.487  36.9         0</span></span>
+<span id="cb52-18"><a href="#cb52-18" tabindex="-1"></a><span class="co">#&gt;  8 PT2     VIS4   Asian      Male     45.0  0.507      4   0.738  48.8         0</span></span>
+<span id="cb52-19"><a href="#cb52-19" tabindex="-1"></a><span class="co">#&gt;  9 PT3     VIS1   Black or … Fema…    43.5  0.682      1   0.576  NA           0</span></span>
+<span id="cb52-20"><a href="#cb52-20" tabindex="-1"></a><span class="co">#&gt; 10 PT3     VIS2   Black or … Fema…    43.5  0.892      2  -0.305  36.0         0</span></span>
+<span id="cb52-21"><a href="#cb52-21" tabindex="-1"></a><span class="co">#&gt; # ℹ 790 more rows</span></span>
+<span id="cb52-22"><a href="#cb52-22" tabindex="-1"></a><span class="co">#&gt; # ℹ 3 more variables: ARMCD_TRT_x_AVISITVIS2 &lt;dbl&gt;,</span></span>
+<span id="cb52-23"><a href="#cb52-23" tabindex="-1"></a><span class="co">#&gt; #   ARMCD_TRT_x_AVISITVIS3 &lt;dbl&gt;, ARMCD_TRT_x_AVISITVIS4 &lt;dbl&gt;</span></span></code></pre></div>
 <p>We can pass the covariance structure as well in the
 <code>set_engine()</code> definition. This allows for more flexibility
 on presetting different covariance structures in the pipeline while
@@ -2517,33 +2553,37 @@ keeping the data preparation step independent.</p>
 <span id="cb54-21"><a href="#cb54-21" tabindex="-1"></a><span class="co">#&gt; Computational engine: mmrm</span></span></code></pre></div>
 <p>Last step is to fit the data with the workflow object</p>
 <div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" tabindex="-1"></a>(fit_tidy <span class="ot">&lt;-</span> <span class="fu">fit</span>(mmrm_wflow_nocov, <span class="at">data =</span> fev_data))</span>
-<span id="cb55-2"><a href="#cb55-2" tabindex="-1"></a><span class="co">#&gt; ══ Workflow [trained] ══════════════════════════════════════════════════════════</span></span>
-<span id="cb55-3"><a href="#cb55-3" tabindex="-1"></a><span class="co">#&gt; Preprocessor: Recipe</span></span>
-<span id="cb55-4"><a href="#cb55-4" tabindex="-1"></a><span class="co">#&gt; Model: linear_reg()</span></span>
-<span id="cb55-5"><a href="#cb55-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb55-6"><a href="#cb55-6" tabindex="-1"></a><span class="co">#&gt; ── Preprocessor ────────────────────────────────────────────────────────────────</span></span>
-<span id="cb55-7"><a href="#cb55-7" tabindex="-1"></a><span class="co">#&gt; 2 Recipe Steps</span></span>
-<span id="cb55-8"><a href="#cb55-8" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb55-9"><a href="#cb55-9" tabindex="-1"></a><span class="co">#&gt; • step_dummy()</span></span>
-<span id="cb55-10"><a href="#cb55-10" tabindex="-1"></a><span class="co">#&gt; • step_interact()</span></span>
-<span id="cb55-11"><a href="#cb55-11" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb55-12"><a href="#cb55-12" tabindex="-1"></a><span class="co">#&gt; ── Model ───────────────────────────────────────────────────────────────────────</span></span>
-<span id="cb55-13"><a href="#cb55-13" tabindex="-1"></a><span class="co">#&gt; mmrm fit</span></span>
-<span id="cb55-14"><a href="#cb55-14" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb55-15"><a href="#cb55-15" tabindex="-1"></a><span class="co">#&gt; Formula:     FEV1 ~ SEX</span></span>
-<span id="cb55-16"><a href="#cb55-16" tabindex="-1"></a><span class="co">#&gt; Data:        data (used 537 observations from 197 subjects with maximum 4 </span></span>
-<span id="cb55-17"><a href="#cb55-17" tabindex="-1"></a><span class="co">#&gt; timepoints)</span></span>
-<span id="cb55-18"><a href="#cb55-18" tabindex="-1"></a><span class="co">#&gt; Weights:     weights</span></span>
-<span id="cb55-19"><a href="#cb55-19" tabindex="-1"></a><span class="co">#&gt; Covariance:  unstructured (10 variance parameters)</span></span>
-<span id="cb55-20"><a href="#cb55-20" tabindex="-1"></a><span class="co">#&gt; Inference:   REML</span></span>
-<span id="cb55-21"><a href="#cb55-21" tabindex="-1"></a><span class="co">#&gt; Deviance:    3699.803</span></span>
-<span id="cb55-22"><a href="#cb55-22" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb55-23"><a href="#cb55-23" tabindex="-1"></a><span class="co">#&gt; Coefficients: </span></span>
-<span id="cb55-24"><a href="#cb55-24" tabindex="-1"></a><span class="co">#&gt; (Intercept)   SEXFemale </span></span>
-<span id="cb55-25"><a href="#cb55-25" tabindex="-1"></a><span class="co">#&gt; 42.80540973  0.04513432 </span></span>
+<span id="cb55-2"><a href="#cb55-2" tabindex="-1"></a><span class="co">#&gt; Warning: Categorical variables used in `step_interact()` should probably be avoided;</span></span>
+<span id="cb55-3"><a href="#cb55-3" tabindex="-1"></a><span class="co">#&gt; This can lead to differences in dummy variable values that are produced by</span></span>
+<span id="cb55-4"><a href="#cb55-4" tabindex="-1"></a><span class="co">#&gt; ?step_dummy (`?recipes::step_dummy()`). Please convert all involved variables</span></span>
+<span id="cb55-5"><a href="#cb55-5" tabindex="-1"></a><span class="co">#&gt; to dummy variables first.</span></span>
+<span id="cb55-6"><a href="#cb55-6" tabindex="-1"></a><span class="co">#&gt; ══ Workflow [trained] ══════════════════════════════════════════════════════════</span></span>
+<span id="cb55-7"><a href="#cb55-7" tabindex="-1"></a><span class="co">#&gt; Preprocessor: Recipe</span></span>
+<span id="cb55-8"><a href="#cb55-8" tabindex="-1"></a><span class="co">#&gt; Model: linear_reg()</span></span>
+<span id="cb55-9"><a href="#cb55-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb55-10"><a href="#cb55-10" tabindex="-1"></a><span class="co">#&gt; ── Preprocessor ────────────────────────────────────────────────────────────────</span></span>
+<span id="cb55-11"><a href="#cb55-11" tabindex="-1"></a><span class="co">#&gt; 2 Recipe Steps</span></span>
+<span id="cb55-12"><a href="#cb55-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb55-13"><a href="#cb55-13" tabindex="-1"></a><span class="co">#&gt; • step_dummy()</span></span>
+<span id="cb55-14"><a href="#cb55-14" tabindex="-1"></a><span class="co">#&gt; • step_interact()</span></span>
+<span id="cb55-15"><a href="#cb55-15" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb55-16"><a href="#cb55-16" tabindex="-1"></a><span class="co">#&gt; ── Model ───────────────────────────────────────────────────────────────────────</span></span>
+<span id="cb55-17"><a href="#cb55-17" tabindex="-1"></a><span class="co">#&gt; mmrm fit</span></span>
+<span id="cb55-18"><a href="#cb55-18" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb55-19"><a href="#cb55-19" tabindex="-1"></a><span class="co">#&gt; Formula:     FEV1 ~ SEX</span></span>
+<span id="cb55-20"><a href="#cb55-20" tabindex="-1"></a><span class="co">#&gt; Data:        data (used 537 observations from 197 subjects with maximum 4 </span></span>
+<span id="cb55-21"><a href="#cb55-21" tabindex="-1"></a><span class="co">#&gt; timepoints)</span></span>
+<span id="cb55-22"><a href="#cb55-22" tabindex="-1"></a><span class="co">#&gt; Weights:     weights</span></span>
+<span id="cb55-23"><a href="#cb55-23" tabindex="-1"></a><span class="co">#&gt; Covariance:  unstructured (10 variance parameters)</span></span>
+<span id="cb55-24"><a href="#cb55-24" tabindex="-1"></a><span class="co">#&gt; Inference:   REML</span></span>
+<span id="cb55-25"><a href="#cb55-25" tabindex="-1"></a><span class="co">#&gt; Deviance:    3699.803</span></span>
 <span id="cb55-26"><a href="#cb55-26" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb55-27"><a href="#cb55-27" tabindex="-1"></a><span class="co">#&gt; Model Inference Optimization:</span></span>
-<span id="cb55-28"><a href="#cb55-28" tabindex="-1"></a><span class="co">#&gt; Converged with code 0 and message: convergence: rel_reduction_of_f &lt;= factr*epsmch</span></span></code></pre></div>
+<span id="cb55-27"><a href="#cb55-27" tabindex="-1"></a><span class="co">#&gt; Coefficients: </span></span>
+<span id="cb55-28"><a href="#cb55-28" tabindex="-1"></a><span class="co">#&gt; (Intercept)   SEXFemale </span></span>
+<span id="cb55-29"><a href="#cb55-29" tabindex="-1"></a><span class="co">#&gt; 42.80540973  0.04513432 </span></span>
+<span id="cb55-30"><a href="#cb55-30" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb55-31"><a href="#cb55-31" tabindex="-1"></a><span class="co">#&gt; Model Inference Optimization:</span></span>
+<span id="cb55-32"><a href="#cb55-32" tabindex="-1"></a><span class="co">#&gt; Converged with code 0 and message: convergence: rel_reduction_of_f &lt;= factr*epsmch</span></span></code></pre></div>
 <p>To retrieve the fit object from within the workflow object run the
 following</p>
 <div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" tabindex="-1"></a>fit_tidy <span class="sc">|&gt;</span></span>
