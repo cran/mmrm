@@ -1,7 +1,7 @@
 Type: Package
 Package: mmrm
 Title: Mixed Models for Repeated Measures
-Version: 0.3.16
+Version: 0.3.17
 Authors@R: c(
     person("Daniel", "Sabanes Bove", , "daniel.sabanes_bove@rconis.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-0176-9239")),
@@ -70,7 +70,7 @@ Collate: 'between-within.R' 'catch-routine-registration.R'
         'residual.R' 'utils-nse.R' 'utils-formula.R' 'satterthwaite.R'
         'skipping.R' 'tidiers.R' 'testing.R' 'tmb-methods.R' 'tmb.R'
         'interop-emmeans.R' 'interop-parsnip.R' 'interop-car.R' 'zzz.R'
-Packaged: 2025-12-09 14:16:01 UTC; Daniel
+Packaged: 2026-01-08 03:24:56 UTC; daniel
 Author: Daniel Sabanes Bove [aut, cre] (ORCID:
     <https://orcid.org/0000-0002-0176-9239>),
   Liming Li [aut] (ORCID: <https://orcid.org/0009-0008-6870-0878>),
@@ -97,4 +97,4 @@ Author: Daniel Sabanes Bove [aut, cre] (ORCID:
   inferential.biostatistics GmbH [cph, fnd]
 Maintainer: Daniel Sabanes Bove <daniel.sabanes_bove@rconis.com>
 Repository: CRAN
-Date/Publication: 2025-12-09 15:20:02 UTC
+Date/Publication: 2026-01-08 06:10:44 UTC
