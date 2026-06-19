@@ -14,7 +14,8 @@ test_that("mmrm_control works as expected", {
       vcov = "Asymptotic",
       n_cores = 1L,
       drop_visit_levels = TRUE,
-      disable_theta_vcov = FALSE
+      disable_theta_vcov = FALSE,
+      emmeans_gcomp_vars = NULL
     ),
     class = "mmrm_control"
   )
@@ -192,7 +193,8 @@ test_that("h_mmrm_tmb_data works as expected", {
       "is_spatial_int",
       "reml",
       "subject_groups",
-      "n_groups"
+      "n_groups",
+      "emmeans_gcomp_vars"
     )
   )
   expect_matrix(result$x_matrix, nrows = 537, ncols = 3, any.missing = FALSE)
@@ -243,7 +245,8 @@ test_that("h_mmrm_tmb_data works as expected with allow_na_response", {
       "is_spatial_int",
       "reml",
       "subject_groups",
-      "n_groups"
+      "n_groups",
+      "emmeans_gcomp_vars"
     )
   )
   expect_matrix(result$x_matrix, nrows = 800, ncols = 3, any.missing = FALSE)
@@ -296,7 +299,8 @@ test_that("h_mmrm_tmb_data do not allow NA in covariates with allow_na_response"
       "is_spatial_int",
       "reml",
       "subject_groups",
-      "n_groups"
+      "n_groups",
+      "emmeans_gcomp_vars"
     )
   )
   expect_matrix(result$x_matrix, nrows = 780, ncols = 3, any.missing = FALSE)
@@ -346,7 +350,8 @@ test_that("h_mmrm_tmb_data works as expected for grouped covariance", {
       "is_spatial_int",
       "reml",
       "subject_groups",
-      "n_groups"
+      "n_groups",
+      "emmeans_gcomp_vars"
     )
   )
   expect_matrix(result$x_matrix, nrows = 537, ncols = 3, any.missing = FALSE)
@@ -396,7 +401,8 @@ test_that("h_mmrm_tmb_data works as expected for mutli-dimensional spatial expon
       "is_spatial_int",
       "reml",
       "subject_groups",
-      "n_groups"
+      "n_groups",
+      "emmeans_gcomp_vars"
     )
   )
   expect_matrix(result$x_matrix, nrows = 537, ncols = 3, any.missing = FALSE)
@@ -1166,6 +1172,7 @@ test_that("h_mmrm_tmb_extract_cov works as expected", {
     drop_visit_levels = TRUE
   )
   tmb_parameters <- h_mmrm_tmb_parameters(formula_parts, tmb_data, start = NULL)
+  tmb_data$emmeans_gcomp_vars <- NULL
   tmb_object <- TMB::MakeADFun(
     data = tmb_data,
     parameters = tmb_parameters,
@@ -1209,6 +1216,7 @@ test_that("h_mmrm_tmb_extract_cov works as expected for group covariance", {
     start = NULL,
     n_groups = 2L
   )
+  tmb_data$emmeans_gcomp_vars <- NULL
   tmb_object <- TMB::MakeADFun(
     data = tmb_data,
     parameters = tmb_parameters,
@@ -1259,6 +1267,7 @@ test_that("h_mmrm_tmb_fit works as expected", {
     drop_visit_levels = TRUE
   )
   tmb_parameters <- h_mmrm_tmb_parameters(formula_parts, tmb_data, start = NULL)
+  tmb_data$emmeans_gcomp_vars <- NULL
   tmb_object <- TMB::MakeADFun(
     data = tmb_data,
     parameters = tmb_parameters,
@@ -1371,6 +1380,7 @@ test_that("h_mmrm_tmb_fit works as expected for grouped covariance", {
     start = NULL,
     n_groups = tmb_data$n_groups
   )
+  tmb_data$emmeans_gcomp_vars <- NULL
   tmb_object <- TMB::MakeADFun(
     data = tmb_data,
     parameters = tmb_parameters,
@@ -1446,6 +1456,7 @@ test_that("h_mmrm_tmb_fit works as expected when theta_vcov calculation is disab
     drop_visit_levels = TRUE
   )
   tmb_parameters <- h_mmrm_tmb_parameters(formula_parts, tmb_data, start = NULL)
+  tmb_data$emmeans_gcomp_vars <- NULL
   tmb_object <- TMB::MakeADFun(
     data = tmb_data,
     parameters = tmb_parameters,
@@ -2517,6 +2528,89 @@ test_that("fit_mmrm works with sp_exp covariance structure and REML(2-dimension)
   expect_equal(exp(result$theta_est[1]), 87.8870, tolerance = 1e-3)
 })
 
+
+## spatial gaussian ----
+
+test_that("fit_mmrm works with sp_gau covariance structure and ML", {
+  formula <- FEV1 ~ sp_gau(VISITN | USUBJID)
+  result <- fit_mmrm(
+    formula,
+    fev_data,
+    weights = rep(1, nrow(fev_data)),
+    reml = FALSE
+  )
+  expect_class(result, "mmrm_tmb")
+  # See design/SAS/sas_sp_gau_ml.txt for the source of numbers.
+  expect_equal(deviance(result), 3871.0583, tolerance = 1e-4)
+  expect_equal(as.numeric(result$beta_est[1]), 42.3539, tolerance = 1e-4)
+  expect_equal(
+    sqrt(-1 / plogis(result$theta_est[2], log.p = TRUE)),
+    1.0853,
+    tolerance = 1e-3
+  )
+  expect_equal(exp(result$theta_est[1]), 88.4874, tolerance = 1e-3)
+})
+
+test_that("fit_mmrm works with sp_gau covariance structure and ML(2-dimension)", {
+  formula <- FEV1 ~ sp_gau(VISITN, VISITN2 | USUBJID)
+  result <- fit_mmrm(
+    formula,
+    fev_data,
+    weights = rep(1, nrow(fev_data)),
+    reml = FALSE
+  )
+  expect_class(result, "mmrm_tmb")
+  # See design/SAS/sas_sp_gau2_ml.txt for the source of numbers.
+  expect_equal(deviance(result), 3891.3791, tolerance = 1e-4)
+  expect_equal(as.numeric(result$beta_est[1]), 42.2192, tolerance = 1e-4)
+  expect_equal(
+    sqrt(-1 / plogis(result$theta_est[2], log.p = TRUE)),
+    1.4052,
+    tolerance = 1e-3
+  )
+  expect_equal(exp(result$theta_est[1]), 89.7880, tolerance = 1e-3)
+})
+
+test_that("fit_mmrm works with sp_gau covariance structure and REML", {
+  formula <- FEV1 ~ sp_gau(VISITN | USUBJID)
+  result <- fit_mmrm(
+    formula,
+    fev_data,
+    weights = rep(1, nrow(fev_data)),
+    reml = TRUE
+  )
+  expect_class(result, "mmrm_tmb")
+  # See design/SAS/sas_sp_gau_reml.txt for the source of numbers.
+  expect_equal(deviance(result), 3870.6985, tolerance = 1e-4)
+  expect_equal(as.numeric(result$beta_est[1]), 42.3542, tolerance = 1e-4)
+  expect_equal(
+    sqrt(-1 / plogis(result$theta_est[2], log.p = TRUE)),
+    1.0871,
+    tolerance = 1e-3
+  )
+  expect_equal(exp(result$theta_est[1]), 88.7170, tolerance = 1e-3)
+})
+
+test_that("fit_mmrm works with sp_gau covariance structure and REML(2-dimension)", {
+  formula <- FEV1 ~ sp_gau(VISITN, VISITN2 | USUBJID)
+  result <- fit_mmrm(
+    formula,
+    fev_data,
+    weights = rep(1, nrow(fev_data)),
+    reml = TRUE
+  )
+  expect_class(result, "mmrm_tmb")
+  # See design/SAS/sas_sp_gau2_reml.txt for the source of numbers.
+  expect_equal(deviance(result), 3891.0600, tolerance = 1e-4)
+  expect_equal(as.numeric(result$beta_est[1]), 42.2195, tolerance = 1e-4)
+  expect_equal(
+    sqrt(-1 / plogis(result$theta_est[2], log.p = TRUE)),
+    1.4086,
+    tolerance = 1e-3
+  )
+  expect_equal(exp(result$theta_est[1]), 90.0242, tolerance = 1e-3)
+})
+
 ## misc ----
 
 test_that("fit_mmrm also works with character ID variable", {
@@ -2651,6 +2745,7 @@ test_that("get_covariance_lower_chol errors when an invalid covariance type is u
   tmb_parameters <- h_mmrm_tmb_parameters(formula_parts, tmb_data, start = NULL)
 
   tmb_data$cov_type <- "gaaah"
+  tmb_data$emmeans_gcomp_vars <- NULL
   expect_error(
     TMB::MakeADFun(
       data = tmb_data,
@@ -2662,6 +2757,7 @@ test_that("get_covariance_lower_chol errors when an invalid covariance type is u
     "Unknown covariance type 'gaaah'"
   )
   tmb_data$is_spatial <- TRUE
+  tmb_data$emmeans_gcomp_vars <- NULL
   expect_error(
     TMB::MakeADFun(
       data = tmb_data,

@@ -39,7 +39,7 @@ cp(time | group / subject)
 sp_exp(coord1, coord2 | group / subject)
 }\if{html}{\out{</div>}}
 
-Note that only \code{sp_exp} (spatial) covariance structures may provide multiple
+Note that only spatial covariance structures may provide multiple
 coordinates, which identify the Euclidean distance between the time points.
 }
 \section{Methods (by class)}{
@@ -63,8 +63,8 @@ as.cov_struct(y ~ x + csh(visit | group / subject), warn_partial = FALSE)
 
 }
 \seealso{
-Other covariance types: 
-\code{\link{cov_struct}()},
+Other covariance types:
+\code{\link[=cov_struct]{cov_struct()}},
 \code{\link{covariance_types}}
 }
 \concept{covariance types}

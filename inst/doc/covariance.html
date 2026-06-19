@@ -291,6 +291,8 @@ Symmetry</a></li>
 <ul>
 <li><a href="#spatial-exponential-sp_exp" id="toc-spatial-exponential-sp_exp">Spatial exponential
 (<code>sp_exp</code>)</a></li>
+<li><a href="#spatial-gaussian-sp_gau" id="toc-spatial-gaussian-sp_gau">Spatial Gaussian
+(<code>sp_gau</code>)</a></li>
 </ul></li>
 <li><a href="#references" id="toc-references">References</a></li>
 </ul>
@@ -517,6 +519,18 @@ to (0, 1). Hence we have the following parametrization form:</p>
 <p><span class="math display">\[
 \theta = (\log(\sigma), \mathop{\mathrm{logit}}(\rho))
 \]</span></p>
+</div>
+<div id="spatial-gaussian-sp_gau" class="section level2">
+<h2>Spatial Gaussian (<code>sp_gau</code>)</h2>
+<p>For spatial Gaussian, the covariance structure is defined as
+follows:</p>
+<p><span class="math display">\[
+  \rho_{ij} = \rho^{d_{ij}^2}
+\]</span></p>
+<p>where <span class="math inline">\(d_{ij}\)</span> is the distance
+between time point <span class="math inline">\(i\)</span> and time point
+<span class="math inline">\(j\)</span>.</p>
+<p>The parameterization is the same as spatial exponential.</p>
 </div>
 </div>
 <div id="references" class="section level1 unnumbered">

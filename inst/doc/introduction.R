@@ -60,7 +60,7 @@ gen_data <- function(
   out$trt <- factor(out$trt)
   out$time <- factor(out$time)
   out$pts <- factor(out$pts)
-  return(out)
+  out
 }
 set.seed(123)
 out <- gen_data()
@@ -162,6 +162,46 @@ dropped_result <- mmrm(
 ## ----sparse_cor---------------------------------------------------------------
 cov2cor(VarCorr(sparse_result))
 cov2cor(VarCorr(dropped_result))
+
+## ----contrasts-fail-example, error = TRUE-------------------------------------
+try({
+ex_data <- fev_data[!(fev_data$RACE == "White" & fev_data$SEX == "Male"), ]
+fit_subgroup1 <- mmrm(
+  formula = FEV1 ~ RACE + ARMCD * AVISIT + us(AVISIT | USUBJID),
+  data = ex_data[ex_data$SEX == "Female", ],
+  vcov = "Asymptotic"
+)
+fit_subgroup2 <- mmrm(
+  formula = FEV1 ~ RACE + ARMCD * AVISIT + us(AVISIT | USUBJID),
+  data = ex_data[ex_data$SEX == "Male", ],
+  vcov = "Asymptotic"
+)
+
+emmeans::emmeans(fit_subgroup1, ~ ARMCD | AVISIT, data = fev_data, weights = "proportional")
+emmeans::emmeans(fit_subgroup2, ~ ARMCD | AVISIT, data = fev_data, weights = "proportional")
+})
+
+## ----contrasts-setup----------------------------------------------------------
+contr_mat <- contr.sum(nlevels(ex_data$RACE))
+rownames(contr_mat) <- levels(fev_data$RACE)
+contr_mat
+
+## ----contrasts-fix-example----------------------------------------------------
+fit_subgroup1 <- mmrm(
+  formula = FEV1 ~ RACE + ARMCD * AVISIT + us(AVISIT | USUBJID),
+  data = ex_data[ex_data$SEX == "Female", ],
+  vcov = "Asymptotic",
+  contrasts = list(RACE = contr_mat)
+)
+fit_subgroup2 <- mmrm(
+  formula = FEV1 ~ RACE + ARMCD * AVISIT + us(AVISIT | USUBJID),
+  data = ex_data[ex_data$SEX == "Male", ],
+  vcov = "Asymptotic",
+  contrasts = list(RACE = contr_mat)
+)
+
+emmeans::emmeans(fit_subgroup1, ~ ARMCD | AVISIT, data = fev_data, weights = "proportional")
+emmeans::emmeans(fit_subgroup2, ~ ARMCD | AVISIT, data = fev_data, weights = "proportional")
 
 ## ----include = FALSE----------------------------------------------------------
 library(mmrm)

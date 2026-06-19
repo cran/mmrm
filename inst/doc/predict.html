@@ -344,17 +344,18 @@ the <span class="math inline">\(j\)</span>th element of <span class="math inline
 <h3>Parametric Sampling for Prediction Interval</h3>
 <p>With the conditional variance formula</p>
 <p><span class="math display">\[
-Var(Y_i) = Var(E(Y_i|\theta)) + E(Var(Y_i|\theta))
+\text{Var}(Y_i) = \text{Var}(\text{E}(Y_i|\theta)) +
+\text{E}(\text{Var}(Y_i|\theta))
 \]</span></p>
-<p>and the conditional expectation <span class="math inline">\(E(Y_i|\theta)\)</span> and the conditional
-variance <span class="math inline">\(Var(Y_i|\theta)\)</span> being
-already described as</p>
+<p>and the conditional expectation <span class="math inline">\(\text{E}(Y_i|\theta)\)</span> and the conditional
+variance <span class="math inline">\(\text{Var}(Y_i|\theta)\)</span>
+being already described as</p>
 <p><span class="math display">\[
-E(Y_i|\theta) = \mu_i(\beta, \theta)
+\text{E}(Y_i|\theta) = \mu_i(\beta, \theta)
 \]</span></p>
 <p>and</p>
 <p><span class="math display">\[
-Var(Y_i|\theta) = A_i(\beta, \theta),
+\text{Var}(Y_i|\theta) = A_i(\beta, \theta),
 \]</span></p>
 <p>we can sample on <span class="math inline">\(\theta\)</span> and
 obtain <span class="math inline">\(\beta\)</span>, then calculate the

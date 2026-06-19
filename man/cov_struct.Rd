@@ -38,12 +38,12 @@ A \code{cov_struct} object.
 }
 \examples{
 cov_struct("csh", "AVISITN", "USUBJID")
-cov_struct("spatial", c("VISITA", "VISITB"), group = "GRP", subject = "SBJ")
+cov_struct("spatial exp", c("VISITA", "VISITB"), group = "GRP", subject = "SBJ")
 
 }
 \seealso{
-Other covariance types: 
-\code{\link{as.cov_struct}()},
+Other covariance types:
+\code{\link[=as.cov_struct]{as.cov_struct()}},
 \code{\link{covariance_types}}
 }
 \concept{covariance types}
