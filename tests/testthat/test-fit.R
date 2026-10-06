@@ -988,7 +988,9 @@ test_that("mmrm works for vcov: Kenward-Roger-Linear and method: Kenward-Roger",
   expect_true(attr(result, "converged"))
   expect_class(result$call, "call")
   expect_true(result$reml)
-  expect_list(result$kr_comp, types = "matrix")
+  expect_list(result$kr_comp[c("P", "S_Q")], types = "matrix")
+  expect_null(result$kr_comp$Q)
+  expect_null(result$kr_comp$R)
   expect_matrix(result$beta_vcov_adj)
 })
 
@@ -1062,4 +1064,12 @@ test_that("mmrm validates contrasts argument", {
     ),
     "list"
   )
+})
+
+test_that("mmrm works for vignette model fit (this seems to be an issue with old openBLAS)", {
+  fit <- expect_silent(mmrm(
+    formula = FEV1 ~ RACE + SEX + ARMCD * AVISIT + us(AVISIT | USUBJID),
+    data = fev_data
+  ))
+  expect_true(attr(fit, "converged"))
 })

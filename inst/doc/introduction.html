@@ -618,17 +618,17 @@ will converge fast.</p>
 <span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="co">#&gt;          (Intercept)         trtTreatment                time2 </span></span>
 <span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a><span class="co">#&gt;         1962.6980059           11.3831958            0.2130684 </span></span>
 <span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="co">#&gt;                time6               time12               time24 </span></span>
-<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="co">#&gt;           -1.6901336           -1.1984278           -7.3954489 </span></span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="co">#&gt;           -1.6901336           -1.1984278           -7.3954490 </span></span>
 <span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a><span class="co">#&gt;               time36               time52               time70 </span></span>
-<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a><span class="co">#&gt;          -11.4078896          -15.8040921          -22.5556525 </span></span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a><span class="co">#&gt;          -11.4078896          -15.8040921          -22.5556526 </span></span>
 <span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a><span class="co">#&gt;               time88              time104   trtTreatment:time2 </span></span>
-<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a><span class="co">#&gt;          -28.2068896          -33.6608068            6.0436315 </span></span>
+<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a><span class="co">#&gt;          -28.2068897          -33.6608069            6.0436315 </span></span>
 <span id="cb7-20"><a href="#cb7-20" tabindex="-1"></a><span class="co">#&gt;   trtTreatment:time6  trtTreatment:time12  trtTreatment:time24 </span></span>
-<span id="cb7-21"><a href="#cb7-21" tabindex="-1"></a><span class="co">#&gt;           27.3686373           49.4246567          107.3638488 </span></span>
+<span id="cb7-21"><a href="#cb7-21" tabindex="-1"></a><span class="co">#&gt;           27.3686373           49.4246567          107.3638489 </span></span>
 <span id="cb7-22"><a href="#cb7-22" tabindex="-1"></a><span class="co">#&gt;  trtTreatment:time36  trtTreatment:time52  trtTreatment:time70 </span></span>
-<span id="cb7-23"><a href="#cb7-23" tabindex="-1"></a><span class="co">#&gt;          161.4310444          233.6438342          316.7387101 </span></span>
+<span id="cb7-23"><a href="#cb7-23" tabindex="-1"></a><span class="co">#&gt;          161.4310445          233.6438343          316.7387103 </span></span>
 <span id="cb7-24"><a href="#cb7-24" tabindex="-1"></a><span class="co">#&gt;  trtTreatment:time88 trtTreatment:time104 </span></span>
-<span id="cb7-25"><a href="#cb7-25" tabindex="-1"></a><span class="co">#&gt;          397.9895966          471.8871913 </span></span>
+<span id="cb7-25"><a href="#cb7-25" tabindex="-1"></a><span class="co">#&gt;          397.9895969          471.8871915 </span></span>
 <span id="cb7-26"><a href="#cb7-26" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb7-27"><a href="#cb7-27" tabindex="-1"></a><span class="co">#&gt; Model Inference Optimization:</span></span>
 <span id="cb7-28"><a href="#cb7-28" tabindex="-1"></a><span class="co">#&gt; Converged with code 0 and message: convergence: rel_reduction_of_f &lt;= factr*epsmch</span></span></code></pre></div>
@@ -766,8 +766,16 @@ structures, the time variable must be coded as a factor.</p>
 </div>
 <div id="weighting" class="section level2">
 <h2>Weighting</h2>
-<p>Users can perform weighted MMRM by specifying a numeric vector
-<code>weights</code> with positive values.</p>
+<p>Users can perform weighted MMRM by specifying one strictly positive
+numeric weight per observation (row of <code>data</code>). These are
+inverse-variance weights: holding the fitted covariance structure fixed,
+an observation with weight 2 has half the residual variance of an
+otherwise comparable observation with weight 1 (and its residual
+standard deviation is divided by <span class="math inline">\(\sqrt{2}\)</span>). The weights are fixed inputs,
+not weights on the outcome itself. They do not need to sum to one or to
+any treatment-group sample size; the default is 1 for every observation.
+The <a href="algorithm.html#linear-model">algorithm vignette</a> shows
+how the vector changes the subject covariance matrices.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>fit_wt <span class="ot">&lt;-</span> <span class="fu">mmrm</span>(</span>
 <span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>  <span class="at">formula =</span> FEV1 <span class="sc">~</span> RACE <span class="sc">+</span> ARMCD <span class="sc">*</span> AVISIT <span class="sc">+</span> <span class="fu">us</span>(AVISIT <span class="sc">|</span> USUBJID),</span>
 <span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>  <span class="at">data =</span> fev_data,</span>
@@ -798,6 +806,11 @@ structures, the time variable must be coded as a factor.</p>
 <span id="cb12-28"><a href="#cb12-28" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb12-29"><a href="#cb12-29" tabindex="-1"></a><span class="co">#&gt; Model Inference Optimization:</span></span>
 <span id="cb12-30"><a href="#cb12-30" tabindex="-1"></a><span class="co">#&gt; Converged with code 0 and message: convergence: rel_reduction_of_f &lt;= factr*epsmch</span></span></code></pre></div>
+<p>Here <code>fev_data$WEIGHT</code> supplies varying observation
+weights. For a simple two-level illustration, the same call could use
+<code>weights = ifelse(fev_data$AVISIT == &quot;VIS1&quot;, 2, 1)</code>. At
+<code>VIS1</code>, this halves the model-implied residual variance
+relative to an otherwise identical observation with weight 1.</p>
 </div>
 <div id="grouped-covariance-structure" class="section level2">
 <h2>Grouped Covariance Structure</h2>

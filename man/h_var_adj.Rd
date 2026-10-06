@@ -9,13 +9,14 @@ h_var_adj(v, w, p, q, r, linear = FALSE)
 \arguments{
 \item{v}{(\code{matrix})\cr unadjusted covariance matrix.}
 
-\item{w}{(\code{matrix})\cr hessian matrix.}
+\item{w}{(\code{matrix})\cr covariance matrix of the estimated covariance parameters.}
 
 \item{p}{(\code{matrix})\cr P matrix from \code{\link[=h_get_kr_comp]{h_get_kr_comp()}}.}
 
 \item{q}{(\code{matrix})\cr Q matrix from \code{\link[=h_get_kr_comp]{h_get_kr_comp()}}.}
 
-\item{r}{(\code{matrix})\cr R matrix from \code{\link[=h_get_kr_comp]{h_get_kr_comp()}}.}
+\item{r}{(\code{matrix} or \code{NULL})\cr R matrix from \code{\link[=h_get_kr_comp]{h_get_kr_comp()}}.
+May be \code{NULL} for the linear approximation.}
 
 \item{linear}{(\code{flag})\cr whether to use linear Kenward-Roger approximation.}
 }
@@ -25,6 +26,11 @@ The matrix of adjusted covariance matrix.
 \description{
 Obtains the Kenward-Roger adjusted covariance matrix for the
 coefficient estimates.
-Used in \code{\link[=mmrm]{mmrm()}} fitting if method is "Kenward-Roger" or "Kenward-Roger-Linear".
+Used in \code{\link[=mmrm]{mmrm()}} fitting if vcov is "Kenward-Roger".
+}
+\details{
+\code{\link[=mmrm]{mmrm()}} uses this function for full Kenward-Roger only, and
+\code{\link[=h_var_adj_contracted]{h_var_adj_contracted()}} for the linear approximation. The pairwise linear
+path is kept as an independent reference for tests.
 }
 \keyword{internal}
